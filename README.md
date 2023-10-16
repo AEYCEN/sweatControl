@@ -32,6 +32,10 @@ Finally, install flask:
 
 If you want to end the running environment, just enter `deactivate` inside the venv root directory.
 
+For the plugins use following command.
+
+`pip install Flask pandas scikit-learn requests`
+
 ## Usage
 
 To run SweatControl, use the flask command or python -m flask. You need to tell the Flask where your application is with the --app option.
