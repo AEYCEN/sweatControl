@@ -1,14 +1,14 @@
 
 from model import HeaterModel
-#import openweathermap_api
+from openweathermap_api import OpenWeatherMapAPI
 
 class HeaterController:
-    def __init__(self):
+    def __init__(self, api_key, city_name):
+        self.api = OpenWeatherMapAPI(api_key, city_name)
         self.model = HeaterModel()
 
     def get_external_temperature(self):
-        # Hier die Außentemperatur von openweathermap.org API abrufen
-        pass
+        return self.api.get_external_temperature()
 
     def get_heater_temperature(self):
         # Hier die Temperatur der Heizung von deinem Modell abrufen
