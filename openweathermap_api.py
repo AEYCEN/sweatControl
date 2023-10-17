@@ -1,5 +1,6 @@
 import requests
 
+
 class OpenWeatherMapAPI:
     def __init__(self, api_key, city_name):
         self.api_key = api_key

@@ -1,6 +1,6 @@
-
 from model import HeaterModel
 from openweathermap_api import OpenWeatherMapAPI
+
 
 class HeaterController:
     def __init__(self, api_key, city_name):
