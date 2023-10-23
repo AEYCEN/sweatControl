@@ -6,9 +6,9 @@ class HeaterModel:
         # Dummy-Daten für das Beispiel
         # Du solltest deine eigenen Daten für das Training verwenden
         data = {
-            'external_temperature': [0, 5, 10, 15, 20, 25, 30],
-            'selected_heater_temperature': [15, 16, 17, 18, 19, 20, 21],
-            'target_vorlauftemperatur': [40, 42, 44, 45, 46, 47, 48]
+            'external_temperature': [-20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30],
+            'selected_heater_temperature': [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
+            'target_vorlauftemperatur': [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80]
         }
 
         # Daten in ein Pandas DataFrame laden
