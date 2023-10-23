@@ -4,6 +4,7 @@ from openweathermap_api import OpenWeatherMapAPI
 
 class HeaterController:
     def __init__(self):
+        self.external_temperature = None
         self.api = OpenWeatherMapAPI()
         self.model = HeaterModel()
 
