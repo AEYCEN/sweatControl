@@ -7,13 +7,12 @@ class HeaterController:
         self.api = OpenWeatherMapAPI()
         self.model = HeaterModel()
 
-    def get_external_temperature(self):
-        return self.api.get_external_temperature()
+    def update_external_temperature(self):
+        # Aktualisiere die Außentemperatur von der OpenWeatherMapAPI
+        self.external_temperature = self.api.get_external_temperature()
 
-    def get_heater_temperature(self):
-        # Hier die Temperatur der Heizung von deinem Modell abrufen
-        pass
-
-    def update_heater_temperature(self, new_temperature):
-        # Hier die Temperatur der Heizung aktualisieren
-        pass
+    def get_heater_temperature(self, selected_heater_temperature):
+        # Rufe die Vorlauftemperatur basierend auf external_temperature und selected_heater_temperature ab
+        self.update_external_temperature()  # Aktualisiere die Außentemperatur
+        vorlauftemperatur = self.model.predict_vorlauftemperatur(self.external_temperature, selected_heater_temperature)
+        return vorlauftemperatur
