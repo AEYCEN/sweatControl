@@ -26,6 +26,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
   transition-duration: 0.5s;
+  user-select: none;
 }
 
 body {
@@ -680,15 +681,16 @@ label input {
 .windows-tab {
   border: 2px solid rgba(255, 255, 255, 0.37);
   min-height: 250px;
-  height: 550px;
+  height: 30vh;
   backdrop-filter: blur(2em);
   min-width: 250px;
-  width: 700px;
+  width: 32vw;
   position: absolute;
   display: none;
   border-radius: 0.5em;
-  left: 489px;
-  top: 92px;
+  left: 50%;
+  top: 10%;
+  transform: translate(-50%);
   resize: both;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.2);
@@ -763,6 +765,7 @@ label input {
 
 #notification-section {
   display: grid;
+  text-align: center;
   place-content: center;
   height: 30vh;
   width: 30vh;
@@ -774,7 +777,7 @@ label input {
   border-radius: 0.5em;
   background-color: rgba(0, 17, 255, 0.1);
   border: 2px solid var(--glass-white-color);
-  font-size: 1.5em;
+  font-size: 1.2em;
   color: white;
   transition-duration: 0.2s;
 }

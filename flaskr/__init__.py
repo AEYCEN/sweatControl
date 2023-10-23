@@ -33,10 +33,12 @@ def create_app(test_config=None):
         external_temperature = heaterController.get_external_temperature()
         external_temperature = round(external_temperature, 1)
         heater_temperature = heaterController.get_heater_temperature()
+        room_temperature = heaterController.get_heater_temperature()
         city_name = heaterController.get_current_city()
         return render_template('index.html',
                                external_temperature=external_temperature,
                                heater_temperature=heater_temperature,
+                               room_temperature=room_temperature,
                                city_name=city_name)
 
     return app
