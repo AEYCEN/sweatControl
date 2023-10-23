@@ -2,9 +2,9 @@ import requests
 
 
 class OpenWeatherMapAPI:
-    def __init__(self):
+    def __init__(self, city_name):
         self.api_key = '925e8087cd21eaf80a3bc597e291a144'
-        self.city_name = 'Krefeld'
+        self.city_name = city_name
         self.base_url = "http://api.openweathermap.org/data/2.5/weather"
 
     def get_external_temperature(self):
