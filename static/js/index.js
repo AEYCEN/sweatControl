@@ -7,6 +7,7 @@ let sweatControlBtn = document.querySelector("#sweatControl-div");
 
 let spegniContainer = document.querySelector("#spegni-section");
 let spegniBtn = document.querySelector(".spegni-pc-start-section");
+let spegniGif = document.querySelector(".spegni-gif");
 
 let paddingContainer = document.querySelector(".padding-start");
 let searchBtn = document.querySelector("#search-div");
@@ -66,16 +67,19 @@ widgetBtn.addEventListener("click", function () {
   }
 });
 
-// turn off computer (graficamente e virtualmente)
+// turn off computer
 spegniBtn.addEventListener("click", function () {
   spegniContainer.classList.toggle("pc-off");
-  alert(
-    "Tja, Windows 11 wird jetzt heruntergefahren! \n\n \nUm es instant wieder hochzufahren, \nklicke einfach irgendwo auf den Bildschirm!"
-  );
+  setTimeout(function () {
+    spegniContainer.style.cursor = "none";
+    spegniGif.style.opacity = 0;
+  }, 7000);
 });
 
 spegniContainer.addEventListener("click", function () {
   spegniContainer.classList.toggle("pc-off");
+  spegniContainer.style.cursor = "default";
+
 });
 
 // SEARCH function in beta
@@ -139,13 +143,16 @@ for (let i = 0; i < appIcon.length; i++) {
     });
 }
 
-sweatControlBtn.addEventListener("click", function () {
+sweatControlBtn.addEventListener("click", openSweatControl);
+document.addEventListener("DOMContentLoaded", openSweatControl);
+
+function openSweatControl() {
     windowsTab.style.display = "grid";
     let appName = 'SweatControl';
     tabImage.style.display = "none";
     spanComingSoon.style.display = "grid";
     nomeTab.textContent = appName;
-});
+}
 
 // ein Symbol in der Navigation erstellen und die Registerkarte ausblenden
 closeBtn.addEventListener("click", function () {
