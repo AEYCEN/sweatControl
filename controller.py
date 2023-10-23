@@ -3,8 +3,8 @@ from openweathermap_api import OpenWeatherMapAPI
 
 
 class HeaterController:
-    def __init__(self, api_key, city_name):
-        self.api = OpenWeatherMapAPI(api_key, city_name)
+    def __init__(self):
+        self.api = OpenWeatherMapAPI()
         self.model = HeaterModel()
 
     def get_external_temperature(self):
