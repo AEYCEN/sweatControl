@@ -34,42 +34,35 @@ Some of the features the patches provide are:
 ## 🚀 Installation
 
 SweatControl requires Python >= 3.10 on the machine in order to run. 
-First, clone the project with either HTTPS or SSH:
+First, create and activate an environment to run the application. Navigate in the `sweatControl` folder and run the following 2 commands:
 
-- SSH:
-`git clone git@github.com:AEYCEN/sweatControl.git`
-- HTTPS:
-`git clone https://github.com/AEYCEN/sweatControl.git`
+🐧 Linux:
 
-Then, create an environment to run the application. First, navigate in the `sweatControl` folder and run the following command:
+    python3 -m venv .venv
+    . .venv/bin/activate
 
-- Linux:
-`python3 -m venv .venv`
-- Windows:
-`py -3 -m venv .venv`
+🪟 Windows:
 
-After creating the environment, activate it with the following command:
-
-- Linux:
-`. .venv/bin/activate`
-- Windows:
-`.venv\Scripts\activate`
-
-After that, install flask:
-`pip install Flask`
+    py -3 -m venv .venv
+    .venv\Scripts\activate
 
 (If you want to end the running environment, just enter `deactivate` inside the venv root directory)
 
 Finally, install all the required plugins:
-`pip install Flask pandas scikit-learn requests`
+
+    pip install Flask pandas scikit-learn requests geocoder geopy
+
 ## 🛠️ Usage
 
-To run SweatControl, use the flask command or python -m flask. You need to tell the Flask where your application is with the --app option.
-This starts the file "app.py":
+To run SweatControl, use the following command:
 
-`flask --app app run`
+    python run.py
 
-Now head over to [localhost:5000](http://127.0.0.1:5000/), and you should see the running application.
+To run it in debug mode instead, use:
+
+    flask --app flaskr run --debug
+
+Head over to [localhost:5000](http://127.0.0.1:5000/), and you should see the running application.
 
 If another program is already using port 5000, you’ll see OSError: [Errno 98] or OSError: [WinError 10013] when the server tries to start. See [Address already in use](https://flask.palletsprojects.com/en/3.0.x/server/#address-already-in-use) for how to handle that.
 

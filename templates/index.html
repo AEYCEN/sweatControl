@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
     <title>SweatControl</title>
-    <link rel="stylesheet" href="../static/css/indexStyles.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/indexStyles.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="../js/index.js" defer></script>
+    <script type="text/javascript" src="../static/js/index.js" defer></script>
 </head>
 <body>
   <!-- barra di navigazion in basso -->
@@ -32,7 +32,7 @@
             <path fill="currentColor" d="M500.3 443.7l-119.7-119.7c27.22-40.41 40.65-90.9 33.46-144.7C401.8 87.79 326.8 13.32 235.2 1.723C99.01-15.51-15.51 99.01 1.724 235.2c11.6 91.64 86.08 166.7 177.6 178.9c53.8 7.189 104.3-6.236 144.7-33.46l119.7 119.7c15.62 15.62 40.95 15.62 56.57 0C515.9 484.7 515.9 459.3 500.3 443.7zM79.1 208c0-70.58 57.42-128 128-128s128 57.42 128 128c0 70.58-57.42 128-128 128S79.1 278.6 79.1 208z"></path>
           </svg></div>
         <!-- windows 11 widget -->
-        <div id="widget-div" title="Widgets"><img src="../static/img/templateIcons/w11-widget-icon.png" alt=""></div>
+        <div id="widget-div" title="Widgets"><img src="{{ url_for('static', filename='img/templateIcons/w11-widget-icon.png') }}" alt="Icon"></div>
         <!-- SweatControl Taskleiste -->
         <div id="sweatControl-div" title="SweatControl"><img src="../static/img/sweatControl-small.png" alt=""></div>
       </div>
@@ -187,10 +187,10 @@
         </svg>
       </div>
       <div class="content-widget">
-          <span style="position: absolute; top: 10%; left: 11%; font-size: 20px;">Uerdingen</span>
+          <span style="position: absolute; top: 10%; left: 10%; font-size: 20px;">{{ city_name }}</span>
         <div class="sole-meteo"></div>
         <div class="temperatura-container">
-          <span>17</span>
+          <span>{{ external_temperature }}</span>
           <span>°C</span>
         </div>
       </div>
@@ -295,9 +295,14 @@
           </div>
         </div>
         <div class="coming-soon-tab">
-          <span class="coming-soon-span">
-            SweatControl v0.1
-          </span>
+          <div class="coming-soon-span">
+            <!-- SweatControl Ihnalt -->
+
+
+
+            <p>Die externe Temperatur beträgt: {{ external_temperature }}</p>
+            <p>Die Heizungstemperatur beträgt: {{ heater_temperature }}</p>
+          </div>
           <img id="tab-image" src="" alt="">
         </div>
       </div>
