@@ -133,7 +133,7 @@ for (let i = 0; i < appIcon.length; i++) {
   });
 }
 
-// buttone per cancellare la tab (nascondere la tab)
+// ein Symbol in der Navigation erstellen und die Registerkarte ausblenden
 closeBtn.addEventListener("click", function () {
   windowsTab.style.display = "none";
 });
@@ -141,8 +141,7 @@ closeBtn.addEventListener("click", function () {
 // crea un icona nella nav, e nasconde la tab
 minBtn.addEventListener("click", function () {
   windowsTab.style.display = "none";
-  /*add element div with img to iconNav*/
-  let newDivNav = document.createElement("div");
+  /*Element div mit img zu iconNav hinzufügen*/  let newDivNav = document.createElement("div");
   let newImageIconNav = document.createElement("img");
   newImageIconNav.src = tabImage.src;
   newDivNav.appendChild(newImageIconNav);
@@ -150,12 +149,12 @@ minBtn.addEventListener("click", function () {
   console.log("MINIMIZED TAB");
 });
 
-// ingrandisce la tab a seconda delle dimensioni dello schermo
+// vergrößert die Registerkarte je nach Bildschirmgröße
 MaxBtn.addEventListener("click", function () {
   topTab();
 });
 
-// per aprire le notifiche
+// um Benachrichtigungen zu öffnen
 notifBtns.addEventListener("click", function () {
   notifContainer.classList.toggle("notification-on");
 });
