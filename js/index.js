@@ -3,6 +3,7 @@ let startBtn = document.querySelector("#windows-div");
 
 let widgetContainer = document.querySelector("#widget-section");
 let widgetBtn = document.querySelector("#widget-div");
+let sweatControlBtn = document.querySelector("#sweatControl-div");
 
 let spegniContainer = document.querySelector("#spegni-section");
 let spegniBtn = document.querySelector(".spegni-pc-start-section");
@@ -119,19 +120,32 @@ document.addEventListener("mouseup", function () {
 });
 
 for (let i = 0; i < appIcon.length; i++) {
-  spanComingSoon.style.display = "grid";
-  tabImage.style.display = "none";
-  appIcon[i].addEventListener("click", function () {
-    windowsTab.style.display = "grid";
     spanComingSoon.style.display = "none";
-    tabImage.style.display = "grid";
-    let appName = appIcon[i].querySelector("span").textContent;
-    nomeTab.textContent = appName;
-    /* get the image from the app icon */
-    let appImage = appIcon[i].querySelector("img").src;
-    tabImage.src = appImage;
-  });
+    tabImage.style.display = "none";
+    appIcon[i].addEventListener("click", function () {
+        windowsTab.style.display = "grid";
+        let appName = appIcon[i].querySelector("span").textContent;
+        if (appName !== 'SweatControl') {
+            tabImage.style.display = "grid";
+            let appImage = appIcon[i].querySelector("img").src;
+            tabImage.src = appImage;
+            spanComingSoon.style.display = "none";
+        } else {
+            tabImage.style.display = "none";
+            spanComingSoon.style.display = "grid";
+
+        }
+        nomeTab.textContent = appName;
+    });
 }
+
+sweatControlBtn.addEventListener("click", function () {
+    windowsTab.style.display = "grid";
+    let appName = 'SweatControl';
+    tabImage.style.display = "none";
+    spanComingSoon.style.display = "grid";
+    nomeTab.textContent = appName;
+});
 
 // ein Symbol in der Navigation erstellen und die Registerkarte ausblenden
 closeBtn.addEventListener("click", function () {
