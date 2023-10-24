@@ -24,6 +24,9 @@ class HeaterController:
         # Hier die Temperatur der Heizung aktualisieren
         pass
 
+    def get_wanted_room_temperature(self):
+        pass
+
 
 if __name__ == "__main__":
     controller = HeaterController()
@@ -32,4 +35,4 @@ if __name__ == "__main__":
     if temperature:
         print(f"{city} - {temperature}°C")
     else:
-        print("Failed to fetch temperature.")
+        print("Failed to fetch temperature!")

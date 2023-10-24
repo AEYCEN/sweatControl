@@ -59,15 +59,15 @@ function checkBatteryStatus() {
 
             var iconClass;
             if (batteryLevel >= 75) {
-                iconClass = 'fa-battery-full'; // Voll geladen
+                iconClass = 'fa-battery-full';
             } else if (batteryLevel >= 50) {
-                iconClass = 'fa-battery-three-quarters'; // 75% geladen
+                iconClass = 'fa-battery-three-quarters';
             } else if (batteryLevel >= 25) {
-                iconClass = 'fa-battery-half'; // 50% geladen
+                iconClass = 'fa-battery-half';
             } else if (batteryLevel > 0) {
-                iconClass = 'fa-battery-quarter'; // Weniger als 50% geladen
+                iconClass = 'fa-battery-quarter';
             } else {
-                iconClass = 'fa-battery-empty'; // Akku leer
+                iconClass = 'fa-battery-empty';
             }
             var batteryIcon = document.querySelector('#accuIcon');
             batteryIcon.setAttribute('data-icon', iconClass);
@@ -83,11 +83,11 @@ function checkBatteryStatus() {
                 console.log(dischargingTime);
                 var minutes = Math.floor((dischargingTime % 3600) / 60);
                 var timeRemaining = hours + 'h ' + minutes + 'min';
-                accuDiv.title = 'Akkustand: ' + batteryLevel + '% verbleibend (' + timeRemaining + ')';
-                accuInline.innerText = 'Akkustand: ' + batteryLevel + '% verbleibend (' + timeRemaining + ')';
+                accuDiv.title = 'Akkustand: ' + batteryLevel + '% verbleibend<br>(' + timeRemaining + ')';
+                accuInline.innerHtml = 'Akkustand: ' + batteryLevel + '% verbleibend<br>(' + timeRemaining + ')';
             } else {
                 accuDiv.title = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
-                accuInline.innerText = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
+                accuInline.innerHTML = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
             }
         });
     }

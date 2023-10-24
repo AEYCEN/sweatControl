@@ -4,7 +4,6 @@ from sklearn.linear_model import LinearRegression
 
 class HeaterModel:
     def __init__(self):
-        # Dummy-Daten für das Beispiel
         data = {
             'external_temperature': [-20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30],
             'selected_heater_temperature': [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],

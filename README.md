@@ -29,7 +29,7 @@ Some of the features the patches provide are:
 * 🧠 **Neural Network Integration**: Neural network algorithms power the intelligent decision-making process for precise temperature control
 * 👤 **User-Friendly Interface**: An interface that makes it easy for homeowners to interact with and customize their heating preferences
 * 🌿 **Energy Efficiency**: Prioritizing energy efficiency, helping you save on heating costs while maintaining a comfortable environment
-* ✨ **And much more!**
+* ✨ **And more!**
 
 ## 🚀 Installation
 
