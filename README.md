@@ -61,7 +61,7 @@ To run SweatControl, use the following command:
 
 To run it in debug mode instead, use:
 
-    flask --app flaskr run --debug
+    flask --app app run --debug
 
 Head over to [localhost:5000](http://127.0.0.1:5000/), and you should see the running application.
 
