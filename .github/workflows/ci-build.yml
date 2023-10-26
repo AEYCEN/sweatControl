@@ -38,7 +38,6 @@ jobs:
         # Exportieren Sie die notwendigen Umgebungsvariablen, die in Ihren Tests verwendet werden
         export FLASK_APP=sweatControl:app
         export FLASK_ENV=testing
-        export YOUR_APP_SETTINGS=config_test.py
       working-directory: ./app
     - name: Lint with flake8
       run: |
