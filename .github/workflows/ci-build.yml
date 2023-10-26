@@ -33,13 +33,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Set up Test Environment
-      run: |
-        # Exportieren Sie die notwendigen Umgebungsvariablen, die in Ihren Tests verwendet werden
-        export FLASK_APP=sweatControl:app
-        export FLASK_ENV=testing
-        export YOUR_APP_SETTINGS=config_test.py
-      working-directory: ./app
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
