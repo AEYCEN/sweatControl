@@ -1,16 +1,18 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: Python application
+name: CI Build App
 
 on:
   push:
     branches: [ "marcus" ]
+    paths:
+      - 'app/**'
   pull_request:
     branches: [ "marcus" ]
 
-#env:
-#  openweathermap_api_key: ${{ secrets.OPENWEATHERMAP_API_KEY }}
+env:
+  openweathermap_api_key: ${{ secrets.OPENWEATHERMAP_API_KEY }}
 
 permissions:
   contents: read
@@ -39,4 +41,9 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest -v --junitxml=test-results.xml
+    - name: Publish test results
+      uses: EnricoMi/publish-unit-test-result-action@v1
+      if: ${{ always() && !env.ACT }}
+      with:
+        files: test-results.xml
