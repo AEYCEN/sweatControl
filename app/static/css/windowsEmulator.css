@@ -222,7 +222,6 @@ nav #nav-container {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 0.2em 0.2em 0.2em 0.5em;
   border-radius: 0.5em;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
   transition-duration: 0.2s;
   font-weight: 300;
   display: flex;
@@ -234,6 +233,7 @@ nav #nav-container {
   background-color: rgba(255, 255, 255, 0.2);
   transition-duration: 0.5s;
   border-top: none;
+  cursor: pointer;
 }
 
 .app-container-header div svg {
@@ -378,12 +378,13 @@ label input {
   gap: 0.5em;
   padding: 0.5em;
   transition-duration: 0.2s;
+  cursor: pointer;
+  border-radius: 0.5em;
 }
 
 .nome-utente-start-section:hover,
 .spegni-pc-start-section:hover {
   background-color: var(--glass-white-color);
-  border-radius: 0.5em;
   transition-duration: 0.5s;
 }
 
@@ -667,7 +668,7 @@ label input {
   place-self: center;
   place-items: center;
   font-size: 1.5em;
-  animation: opacity 2s ease-in-out;
+  animation: opacity 1s ease-in-out;
   color: white;
   /*center this div */
   height: calc(100% - 2em);

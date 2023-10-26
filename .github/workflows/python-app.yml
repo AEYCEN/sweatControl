@@ -9,8 +9,8 @@ on:
   pull_request:
     branches: [ "marcus" ]
 
-env:
-  openweathermap_api_key: ${{ secrets.OPENWEATHERMAP_API_KEY }}
+#env:
+#  openweathermap_api_key: ${{ secrets.OPENWEATHERMAP_API_KEY }}
 
 permissions:
   contents: read

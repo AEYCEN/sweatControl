@@ -5,8 +5,7 @@ from .HeaterController import HeaterController
 
 
 def create_app(test_config=None):
-    # create and configure the app
-    app = Flask(__name__, instance_relative_config=True, template_folder='../templates', static_folder='../static')
+    app = Flask(__name__, instance_relative_config=True, template_folder='templates', static_folder='static')
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -26,15 +25,15 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    heaterController = HeaterController()
+    heater_controller = HeaterController()
 
     @app.route('/')
     def index():
-        external_temperature = heaterController.get_external_temperature()
+        external_temperature = heater_controller.get_external_temperature()
         external_temperature = round(external_temperature, 1)
-        heater_temperature = heaterController.get_heater_temperature()
-        room_temperature = heaterController.get_wanted_room_temperature()
-        city_name = heaterController.get_current_city()
+        heater_temperature = heater_controller.get_heater_temperature()
+        room_temperature = heater_controller.get_wanted_room_temperature()
+        city_name = heater_controller.get_current_city()
         return render_template('base.html',
                                external_temperature=external_temperature,
                                heater_temperature=heater_temperature,
