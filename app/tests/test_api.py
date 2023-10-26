@@ -1,4 +1,14 @@
 import json
+import pytest
+
+from app import create_app
+
+
+@pytest.fixture
+def app():
+    app = create_app("config_test.py")
+    with app.app_context():
+        yield app
 
 
 # Test the process API returns JSON results we expect

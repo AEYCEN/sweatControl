@@ -33,6 +33,14 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Set up Test Environment
+      run: |
+        # Hier können Sie Ihre Testumgebung einrichten, z.B. die Test-Datenbank initialisieren
+        # Exportieren Sie die notwendigen Umgebungsvariablen, die in Ihren Tests verwendet werden
+        export FLASK_APP=sweatControl:app
+        export FLASK_ENV=testing
+        export YOUR_APP_SETTINGS=config_test.py
+      working-directory: ./app
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -41,9 +49,4 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest -v --junitxml=test-results.xml
-    - name: Publish test results
-      uses: EnricoMi/publish-unit-test-result-action@v1
-      if: ${{ always() && !env.ACT }}
-      with:
-        files: test-results.xml
+        pytest
