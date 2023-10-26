@@ -35,7 +35,6 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Set up Test Environment
       run: |
-        # Hier können Sie Ihre Testumgebung einrichten, z.B. die Test-Datenbank initialisieren
         # Exportieren Sie die notwendigen Umgebungsvariablen, die in Ihren Tests verwendet werden
         export FLASK_APP=sweatControl:app
         export FLASK_ENV=testing
