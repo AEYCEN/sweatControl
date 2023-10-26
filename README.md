@@ -50,10 +50,11 @@ First, create and activate an environment to run the application. Navigate in th
 
 Finally, install all the required plugins:
 
-    pip install Flask pandas scikit-learn requests geocoder geopy
+    pip install -r requirements.txt
 
 ## 🛠️ Usage
 
+Always activate the environment like described above before you run the application.
 To run SweatControl, use the following command:
 
     python run.py

@@ -83,11 +83,11 @@ function checkBatteryStatus() {
                 console.log(dischargingTime);
                 var minutes = Math.floor((dischargingTime % 3600) / 60);
                 var timeRemaining = hours + 'h ' + minutes + 'min';
-                accuDiv.title = 'Akkustand: ' + batteryLevel + '% verbleibend<br>(' + timeRemaining + ')';
-                accuInline.innerHtml = 'Akkustand: ' + batteryLevel + '% verbleibend<br>(' + timeRemaining + ')';
+                accuDiv.title = 'Akkustand: ' + batteryLevel + '% verbleibend (' + timeRemaining + ')';
+                accuInline.innerHTML = 'Akkustand: ' + batteryLevel + '% verbleibend<br>(' + timeRemaining + ')';
             } else {
                 accuDiv.title = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
-                accuInline.innerHTML = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
+                accuInline.innerText = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
             }
         });
     }
