@@ -5,7 +5,7 @@
       media="(prefers-color-scheme: dark)"
     >
     <img 
-      src="static/img/sweatControl-full.png"
+      src="app/static/img/sweatControl-full.png"
     >
   </picture>
   <br><br>
@@ -50,7 +50,7 @@ First, create and activate an environment to run the application. Navigate in th
 
 (If you want to end the running environment, just enter `deactivate` inside the venv root directory)
 
-Finally, install all the required plugins:
+Then install all the required plugins:
 
     pip install -r requirements.txt
 
@@ -61,7 +61,7 @@ Create a file `open_weather.py` with the following template and insert your API 
 
     API_KEY = "<YourApiKey>"
 
-Then, put this file into the existing `secret` folder in the root directory.
+Finally, create in the root directory a folder with the name `secret` and put the created file `open_weather.py` in it.
 
 ## 🛠️ Usage
 
