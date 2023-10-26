@@ -11,6 +11,13 @@ def app():
         yield app
 
 
+@pytest.fixture
+def client():
+    app = create_app()
+    with app.test_client() as client:
+        yield client
+
+
 # Test the process API returns JSON results we expect
 def test_api_process(client):
     resp = client.get("/api/process")
