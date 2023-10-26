@@ -33,6 +33,8 @@ Some of the features the patches provide are:
 
 ## 🚀 Installation
 
+### Environment & Plugins
+
 SweatControl requires Python >= 3.10 on the machine in order to run. 
 First, create and activate an environment to run the application. Navigate in the `sweatControl` folder and run the following 2 commands:
 
@@ -51,6 +53,15 @@ First, create and activate an environment to run the application. Navigate in th
 Finally, install all the required plugins:
 
     pip install -r requirements.txt
+
+### OpenWeather API key
+
+An [OpenWeather 2.5 API key](https://home.openweathermap.org/users/sign_up) is required to run the application. 
+Create a file `open_weather.py` with the following template and insert your API key:
+
+    API_KEY = "<YourApiKey>"
+
+Then, put this file into the existing `secret` folder in the root directory.
 
 ## 🛠️ Usage
 

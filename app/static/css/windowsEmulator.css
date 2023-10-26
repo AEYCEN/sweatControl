@@ -581,7 +581,7 @@ label input {
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  background-color: black;
+  background-color: #050505;
   z-index: 1000;
   animation: opacity 2s ease-in-out;
 }

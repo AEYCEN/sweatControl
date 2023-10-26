@@ -1,13 +1,14 @@
 import os
 import requests
 
-# API_KEY = os.environ["openweathermap_api_key"]
 
-
-class OpenWeatherMapAPI:
+class OpenWeatherAPI:
     def __init__(self, city_name):
-        # self.api_key = {API_KEY}
-        self.api_key = '925e8087cd21eaf80a3bc597e291a144'
+        if "OPENWEATHER_API_KEY" in os.environ:
+            self.api_key = os.environ.get("OPENWEATHER_API_KEY")
+        else:
+            from secret.open_weather import API_KEY
+            self.api_key = API_KEY
         self.city_name = city_name
         self.base_url = "http://api.openweathermap.org/data/2.5/weather"
 

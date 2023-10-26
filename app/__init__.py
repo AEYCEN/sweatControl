@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, render_template
-from .HeaterController import HeaterController
+from app.HeaterController import HeaterController
 
 
 def create_app(test_config=None):

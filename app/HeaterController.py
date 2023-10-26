@@ -1,12 +1,12 @@
 import geocoder
-from .HeaterModel import HeaterModel
-from .OpenWeatherMapAPI import OpenWeatherMapAPI
+from app.HeaterModel import HeaterModel
+from app.OpenWeatherAPI import OpenWeatherAPI
 
 
 class HeaterController:
     def __init__(self):
         city_name = self.get_current_city()
-        self.api = OpenWeatherMapAPI(city_name)
+        self.api = OpenWeatherAPI(city_name)
         self.model = HeaterModel()
 
     def get_current_city(self):
