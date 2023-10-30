@@ -16,9 +16,11 @@ body:
     description: |
       - Beschreibe die Funktion im Detail
       - Füge nach Möglichkeit Bilder, Videos, Links, Beispiele, Referenzen usw. hinzu
+  validations:
+    required: true
 - type: textarea
   attributes:
-    label: Lösung
+    label: Lösungsansatz
     description: | 
       Vorschlag, wie das Ticket umgesetzt werden könnte
       
