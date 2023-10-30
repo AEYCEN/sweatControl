@@ -1,4 +1,5 @@
 import os
+import sys
 
 from flask import Flask, render_template
 from app.HeaterController import HeaterController
@@ -26,11 +27,12 @@ def create_app(test_config=None):
         pass
 
     heater_controller = HeaterController()
+    if heater_controller.get_external_temperature() is None:
+        sys.exit(1)
 
     @app.route('/')
     def index():
-        external_temperature = heater_controller.get_external_temperature()
-        external_temperature = round(external_temperature, 1)
+        external_temperature = round(heater_controller.get_external_temperature(),1)
         heater_temperature = heater_controller.get_heater_temperature()
         room_temperature = heater_controller.get_wanted_room_temperature()
         city_name = heater_controller.get_current_city()

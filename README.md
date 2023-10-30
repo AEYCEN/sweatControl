@@ -35,17 +35,17 @@ Some of the features the patches provide are:
 
 ### Environment & Plugins
 
-SweatControl requires Python >= 3.10 on the machine in order to run. 
-First, create and activate an environment to run the application. Navigate in the `sweatControl` folder and run the following 2 commands:
+SweatControl does ***not*** require Python on the machine in order to run.
+First, create and activate an Python environment to run the application. Navigate in the `sweatControl` folder and run the following 2 commands:
 
 🐧 Linux:
 
-    python3 -m venv .venv
+    python3.11 -m venv .venv
     . .venv/bin/activate
 
 🪟 Windows:
 
-    py -3 -m venv .venv
+    py -3.11 -m venv .venv
     .venv\Scripts\activate
 
 (If you want to end the running environment, just enter `deactivate` inside the venv root directory)
