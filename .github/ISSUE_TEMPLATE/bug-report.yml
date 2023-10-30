@@ -6,7 +6,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        # SweatControl bug report
+        # SweatControl Bug Report
         
         Bitte prüfe, ob für diesen Bug bereits Tickets vorhanden sind [hier](https://github.com/AEYCEN/sweatControl/labels/bug) bevor Du ein neues erstellst.
 
