@@ -1,0 +1,35 @@
+name: 🐞 Bug report
+description: Melde einen bug oder ein problem.
+title: 'bug: '
+labels: [ 'bug' ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # SweatControl bug report
+        
+        Bitte prüfe, ob für diesen Bug bereits Tickets vorhanden sind [hier](https://github.com/AEYCEN/sweatControl/labels/bug) bevor Du ein neues erstellst.
+
+  - type: textarea
+    attributes:
+      label: Fehlerbeschreibung
+      description: |
+        - Beschreibe den Fehler im Detail
+        - Füge nach Möglichkeit Schritte hinzu, um den Fehler zu reproduzieren (Schritt 1. ... Schritt 2. ...)
+        - Füge nach Möglichkeit Bilder und Videos hinzu
+        - Windows oder Linux?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Error logs
+      description: Fehlermeldungen aus der Shell
+      render: shell
+  - type: textarea
+    attributes:
+      label: Lösungsvorschlag
+      description: Füge gegebenenfalls eine mögliche Lösung für den Fehler hinzu
+  - type: textarea
+    attributes:
+      label: Zusätzlicher Kontext
+      description: Füge zusätzlichen Kontext hier hinzu
