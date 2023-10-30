@@ -52,12 +52,7 @@ Then install all the required plugins:
 
     pip install -r requirements.txt
 
-<div style="background-color: #333333; padding: 1%; border-radius: 0.5rem; color: #bababa; display: flex; align-items: center;">
-    <div style="font-size: 30px; padding: 0 30px 0 20px;">ℹ️</div>
-    <p>Wenn Sie die laufende Umgebung nach der Verwendung der Anwendung beenden möchten, geben Sie einfach "deactivate" ein, während in der CLI "( .venv)" vor Ihrer Benutzereingabe angezeigt wird.</p>
-</div>
-
-
+ℹ️ If you want to stop the running environment after using the application, just type `deactivate` while the CLI will display `(.venv)` in front of your user input.
 
 ### OpenWeather API key
 
