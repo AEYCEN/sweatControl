@@ -1,0 +1,23 @@
+.sweatControlGeneralContainer {
+    padding: 8%;
+}
+
+#temperature-chart {
+    display: block;
+    width: 400px;
+    height: 400px;
+    margin-top: 20px;
+}
+
+.slider-container {
+    display: inline-block;
+    margin-right: 1%;
+    max-width: 1%;
+}
+
+/* CSS für die Schieberegler selbst */
+.slider {
+    transform: rotate(270deg); /* Vertikale Ausrichtung */
+    width: 200px; /* Breite des Schiebereglers anpassen */
+    height: 20px; /* Höhe des Schiebereglers anpassen */
+}

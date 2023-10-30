@@ -26,6 +26,7 @@ body {
   background-attachment: fixed;
   background-size: cover;
   transition-duration: 0.5s;
+  user-select: none;
 }
 
 body {
@@ -221,7 +222,6 @@ nav #nav-container {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 0.2em 0.2em 0.2em 0.5em;
   border-radius: 0.5em;
-  border-top: 1px solid rgba(255, 255, 255, 0.15);
   transition-duration: 0.2s;
   font-weight: 300;
   display: flex;
@@ -233,6 +233,7 @@ nav #nav-container {
   background-color: rgba(255, 255, 255, 0.2);
   transition-duration: 0.5s;
   border-top: none;
+  cursor: pointer;
 }
 
 .app-container-header div svg {
@@ -377,12 +378,13 @@ label input {
   gap: 0.5em;
   padding: 0.5em;
   transition-duration: 0.2s;
+  cursor: pointer;
+  border-radius: 0.5em;
 }
 
 .nome-utente-start-section:hover,
 .spegni-pc-start-section:hover {
   background-color: var(--glass-white-color);
-  border-radius: 0.5em;
   transition-duration: 0.5s;
 }
 
@@ -579,7 +581,7 @@ label input {
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  background-color: black;
+  background-color: #050505;
   z-index: 1000;
   animation: opacity 2s ease-in-out;
 }
@@ -666,7 +668,7 @@ label input {
   place-self: center;
   place-items: center;
   font-size: 1.5em;
-  animation: opacity 2s ease-in-out;
+  animation: opacity 1s ease-in-out;
   color: white;
   /*center this div */
   height: calc(100% - 2em);
@@ -680,15 +682,16 @@ label input {
 .windows-tab {
   border: 2px solid rgba(255, 255, 255, 0.37);
   min-height: 250px;
-  height: 550px;
+  height: 30vh;
   backdrop-filter: blur(2em);
   min-width: 250px;
-  width: 700px;
+  width: 32vw;
   position: absolute;
   display: none;
   border-radius: 0.5em;
-  left: 489px;
-  top: 92px;
+  left: 50%;
+  top: 10%;
+
   resize: both;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.2);
@@ -763,6 +766,7 @@ label input {
 
 #notification-section {
   display: grid;
+  text-align: center;
   place-content: center;
   height: 30vh;
   width: 30vh;
@@ -774,7 +778,7 @@ label input {
   border-radius: 0.5em;
   background-color: rgba(0, 17, 255, 0.1);
   border: 2px solid var(--glass-white-color);
-  font-size: 1.5em;
+  font-size: 1.2em;
   color: white;
   transition-duration: 0.2s;
 }

@@ -3,9 +3,11 @@ let startBtn = document.querySelector("#windows-div");
 
 let widgetContainer = document.querySelector("#widget-section");
 let widgetBtn = document.querySelector("#widget-div");
+let sweatControlBtn = document.querySelector("#sweatControl-div");
 
 let spegniContainer = document.querySelector("#spegni-section");
 let spegniBtn = document.querySelector(".spegni-pc-start-section");
+let spegniGif = document.querySelector(".spegni-gif");
 
 let paddingContainer = document.querySelector(".padding-start");
 let searchBtn = document.querySelector("#search-div");
@@ -17,9 +19,9 @@ let windowsTab = document.querySelector(".windows-tab");
 
 let topPartTab = document.querySelector(".topnavbar-tab");
 
-let closeBtn = document.querySelector("#close-icon");
-let MaxBtn = document.querySelector("#max-icon");
-let minBtn = document.querySelector("#min-icon");
+let closeBtn = document.querySelector("#closeField");
+let MaxBtn = document.querySelector("#maxField");
+let minBtn = document.querySelector("#minField");
 
 let heightTab = document.querySelector(".coming-soon-tab");
 
@@ -34,6 +36,9 @@ let iconNav = document.querySelector("#first-container");
 let notifBtns = document.querySelector("#second-container");
 let notifContainer = document.querySelector("#notification-section");
 
+let accuDiv = document.querySelector("#accuDiv");
+let accuInline = document.querySelector("#accuInline");
+
 var vh = window.innerHeight / 100;
 var vw = window.innerWidth / 100;
 
@@ -46,6 +51,51 @@ let firstPositionY;
 
 let lastPositionX;
 let lastPositionY;
+
+function checkBatteryStatus() {
+    if ('getBattery' in navigator) {
+        navigator.getBattery().then(function(battery) {
+            var batteryLevel = battery.level * 100;
+
+            var iconClass;
+            if (batteryLevel >= 75) {
+                iconClass = 'fa-battery-full';
+            } else if (batteryLevel >= 50) {
+                iconClass = 'fa-battery-three-quarters';
+            } else if (batteryLevel >= 25) {
+                iconClass = 'fa-battery-half';
+            } else if (batteryLevel > 0) {
+                iconClass = 'fa-battery-quarter';
+            } else {
+                iconClass = 'fa-battery-empty';
+            }
+            var batteryIcon = document.querySelector('#accuIcon');
+            batteryIcon.setAttribute('data-icon', iconClass);
+
+            var chargingStatus = battery.charging ? 'Lädt' : 'Entlädt';
+            if (battery.charging === false) {
+                if ( battery.dischargingTime === Infinity) {
+                    var dischargingTime = 26000;
+                } else {
+                    var dischargingTime = battery.dischargingTime;
+                }
+                var hours = Math.floor(dischargingTime / 3600);
+                console.log(dischargingTime);
+                var minutes = Math.floor((dischargingTime % 3600) / 60);
+                var timeRemaining = hours + 'h ' + minutes + 'min';
+                accuDiv.title = 'Akkustand: ' + batteryLevel + '% verbleibend (' + timeRemaining + ')';
+                accuInline.innerHTML = 'Akkustand: ' + batteryLevel + '% verbleibend<br>(' + timeRemaining + ')';
+            } else {
+                accuDiv.title = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
+                accuInline.innerText = 'Akkustand: ' + batteryLevel + '% (' + chargingStatus + ')';
+            }
+        });
+    }
+}
+if ('getBattery' in navigator) {} else {
+    console.log('Die Battery Status API wird in diesem Browser nicht unterstützt.');
+}
+setInterval(checkBatteryStatus, 1000);
 
 // from bottom to top WINDOWS START animation
 startBtn.addEventListener("click", function () {
@@ -65,16 +115,20 @@ widgetBtn.addEventListener("click", function () {
   }
 });
 
-// turn off computer (graficamente e virtualmente)
+// turn off computer
 spegniBtn.addEventListener("click", function () {
   spegniContainer.classList.toggle("pc-off");
-  alert(
-    "Tja, Windows 11 wird jetzt heruntergefahren! \n\n \nUm es instant wieder hochzufahren, \nklicke einfach irgendwo auf den Bildschirm!"
-  );
+  setTimeout(function () {
+    spegniContainer.style.cursor = "none";
+    spegniGif.style.opacity = 0;
+    window.close();
+  }, 7000);
 });
 
 spegniContainer.addEventListener("click", function () {
   spegniContainer.classList.toggle("pc-off");
+  spegniContainer.style.cursor = "default";
+
 });
 
 // SEARCH function in beta
@@ -119,18 +173,35 @@ document.addEventListener("mouseup", function () {
 });
 
 for (let i = 0; i < appIcon.length; i++) {
-  spanComingSoon.style.display = "grid";
-  tabImage.style.display = "none";
-  appIcon[i].addEventListener("click", function () {
-    windowsTab.style.display = "grid";
     spanComingSoon.style.display = "none";
-    tabImage.style.display = "grid";
-    let appName = appIcon[i].querySelector("span").textContent;
+    tabImage.style.display = "none";
+    appIcon[i].addEventListener("click", function () {
+        windowsTab.style.display = "grid";
+        let appName = appIcon[i].querySelector("span").textContent;
+        if (appName !== 'SweatControl') {
+            tabImage.style.display = "grid";
+            let appImage = appIcon[i].querySelector("img").src;
+            tabImage.src = appImage;
+            spanComingSoon.style.display = "none";
+        } else {
+            tabImage.style.display = "none";
+            spanComingSoon.style.display = "grid";
+
+        }
+        nomeTab.textContent = appName;
+    });
+}
+
+sweatControlBtn.addEventListener("click", openSweatControl);
+document.addEventListener("DOMContentLoaded", openSweatControl);
+
+function openSweatControl() {
+    windowsTab.style.display = "grid";
+    let appName = 'SweatControl';
+    tabImage.src = "../static/img/sweatControl-small.png";
+    tabImage.style.display = "none";
+    spanComingSoon.style.display = "grid";
     nomeTab.textContent = appName;
-    /* get the image from the app icon */
-    let appImage = appIcon[i].querySelector("img").src;
-    tabImage.src = appImage;
-  });
 }
 
 // ein Symbol in der Navigation erstellen und die Registerkarte ausblenden
@@ -138,10 +209,11 @@ closeBtn.addEventListener("click", function () {
   windowsTab.style.display = "none";
 });
 
-// crea un icona nella nav, e nasconde la tab
+// Erstellt ein Symbol in der Navigation und blendet die Registerkarte aus
 minBtn.addEventListener("click", function () {
   windowsTab.style.display = "none";
-  /*Element div mit img zu iconNav hinzufügen*/  let newDivNav = document.createElement("div");
+  /*Element div mit img zu iconNav hinzufügen*/
+  let newDivNav = document.createElement("div");
   let newImageIconNav = document.createElement("img");
   newImageIconNav.src = tabImage.src;
   newDivNav.appendChild(newImageIconNav);
@@ -331,13 +403,13 @@ function getDate() {
   // se il giorno/mese è meno di 10, allora si aggiunge uno 0 prima
   if (giorno < 10 && mese < 10) {
     calendarioContainer.innerHTML =
-      "0" + giorno + "/" + "0" + mese + "/" + anno;
+      "0" + giorno + "." + "0" + mese + "." + anno;
   } else if (giorno < 10) {
-    calendarioContainer.innerHTML = "0" + giorno + "/" + mese + "/" + anno;
+    calendarioContainer.innerHTML = "0" + giorno + "." + mese + "." + anno;
   } else if (mese < 10) {
-    calendarioContainer.innerHTML = giorno + "/" + "0" + mese + "/" + anno;
+    calendarioContainer.innerHTML = giorno + "." + "0" + mese + "." + anno;
   } else {
-    calendarioContainer.innerHTML = giorno + "/" + mese + "/" + anno;
+    calendarioContainer.innerHTML = giorno + "." + mese + "." + anno;
   }
 
   document.getElementById("sistema-data").title =
