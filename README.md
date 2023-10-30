@@ -35,24 +35,29 @@ Some of the features the patches provide are:
 
 ### Environment & Plugins
 
-SweatControl does ***not*** require Python on the machine in order to run.
-First, create and activate an Python environment to run the application. Navigate in the `sweatControl` folder and run the following 2 commands:
+SweatControl does require Python >= 3.10 on the machine in order to run.
+First, create and activate a Python environment to run the application. Navigate in the newly cloned `sweatControl` folder and run the following 2 commands:
 
-🐧 Linux:
+🐧 *Linux:*
 
-    python3.11 -m venv .venv
+    python3 -m venv .venv
     . .venv/bin/activate
 
-🪟 Windows:
+🪟 *Windows:*
 
-    py -3.11 -m venv .venv
+    py -3 -m venv .venv
     .venv\Scripts\activate
-
-(If you want to end the running environment, just enter `deactivate` inside the venv root directory)
 
 Then install all the required plugins:
 
     pip install -r requirements.txt
+
+<div style="background-color: #333333; padding: 1%; border-radius: 0.5rem; color: #bababa; display: flex; align-items: center;">
+    <div style="font-size: 30px; padding: 0 30px 0 20px;">ℹ️</div>
+    <p>Wenn Sie die laufende Umgebung nach der Verwendung der Anwendung beenden möchten, geben Sie einfach "deactivate" ein, während in der CLI "( .venv)" vor Ihrer Benutzereingabe angezeigt wird.</p>
+</div>
+
+
 
 ### OpenWeather API key
 
@@ -65,8 +70,7 @@ Finally, create in the root directory a folder with the name `secret` and put th
 
 ## 🛠️ Usage
 
-Always activate the environment like described above before you run the application.
-To run SweatControl, use the following command:
+Always activate the environment (*like described above in the second line of the os related part*) before you run SweatControl with the following command:
 
     python run.py
 
@@ -78,7 +82,7 @@ Head over to [localhost:5000](http://127.0.0.1:5000/), and you should see the ru
 
 If another program is already using port 5000, you’ll see OSError: [Errno 98] or OSError: [WinError 10013] when the server tries to start. See [Address already in use](https://flask.palletsprojects.com/en/3.0.x/server/#address-already-in-use) for how to handle that.
 
-*Source: [Flask Guide](https://flask.palletsprojects.com/en/3.0.x/quickstart/)*
+*Additional information: [Flask Guide](https://flask.palletsprojects.com/en/3.0.x/quickstart/)*
 ## 📖 Imprint
 
 **Development, Administration, Project Management & Design**<br>
