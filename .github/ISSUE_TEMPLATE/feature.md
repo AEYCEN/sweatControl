@@ -1,7 +1,7 @@
 name: ⭐ Feature
 description: Erstelle ein detailliertes Ticket für eine neues Feature.
 title: 'feat: '
-labels: ['enhancement']
+labels: ['']
 body:
   - type: markdown
     attributes:
