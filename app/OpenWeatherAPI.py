@@ -1,5 +1,4 @@
 import os
-import sys
 import requests
 
 # ANSI color codes
