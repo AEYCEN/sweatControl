@@ -1,23 +1,75 @@
-.sweatControlGeneralContainer {
-    padding: 8%;
+.sc-general-container {
+    padding: 5%;
 }
 
-#temperature-chart {
+::-webkit-scrollbar {
+    width: 5px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #585858;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: grey;
+}
+
+#sc-chart {
     display: block;
     width: 400px;
     height: 400px;
     margin-top: 20px;
 }
 
-.slider-container {
-    display: inline-block;
-    margin-right: 1%;
-    max-width: 1%;
+.sc-chart-inputs {
+
 }
 
-/* CSS für die Schieberegler selbst */
-.slider {
-    transform: rotate(270deg); /* Vertikale Ausrichtung */
-    width: 200px; /* Breite des Schiebereglers anpassen */
-    height: 20px; /* Höhe des Schiebereglers anpassen */
+.sc-settings-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 6px 12px;
+  gap: 8px;
+  height: 36px;
+  width: 120px;
+  border: none;
+  background: #5e41de33;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.lable {
+  line-height: 20px;
+  font-size: 17px;
+  color: #5D41DE;
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.sc-settings-button:hover {
+  background: #5e41de4d;
+}
+
+.sc-settings-button:hover .svg-icon {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }

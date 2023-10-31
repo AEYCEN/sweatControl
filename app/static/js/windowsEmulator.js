@@ -1,50 +1,50 @@
-let startContainer = document.querySelector("#w11-start-section");
-let startBtn = document.querySelector("#windows-div");
+const startContainer = document.querySelector("#w11-start-section");
+const startBtn = document.querySelector("#windows-div");
 
-let widgetContainer = document.querySelector("#widget-section");
-let widgetBtn = document.querySelector("#widget-div");
-let sweatControlBtn = document.querySelector("#sweatControl-div");
+const widgetContainer = document.querySelector("#widget-section");
+const widgetBtn = document.querySelector("#widget-div");
+const sweatControlBtn = document.querySelector("#sweatControl-div");
 
-let spegniContainer = document.querySelector("#spegni-section");
-let spegniBtn = document.querySelector(".spegni-pc-start-section");
-let spegniGif = document.querySelector(".spegni-gif");
+const spegniContainer = document.querySelector("#spegni-section");
+const spegniBtn = document.querySelector(".spegni-pc-start-section");
+const spegniGif = document.querySelector(".spegni-gif");
 
-let paddingContainer = document.querySelector(".padding-start");
-let searchBtn = document.querySelector("#search-div");
+const paddingContainer = document.querySelector(".padding-start");
+const searchBtn = document.querySelector("#search-div");
 
-let searchContainer = document.querySelector("#search-content");
-let footerStartContainer = document.querySelector("#footer-start-section");
+const searchContainer = document.querySelector("#search-content");
+const footerStartContainer = document.querySelector("#footer-start-section");
 
-let windowsTab = document.querySelector(".windows-tab");
+const windowsTab = document.querySelector(".windows-tab");
 
-let topPartTab = document.querySelector(".topnavbar-tab");
+const topPartTab = document.querySelector(".topnavbar-tab");
 
-let closeBtn = document.querySelector("#closeField");
-let MaxBtn = document.querySelector("#maxField");
-let minBtn = document.querySelector("#minField");
+const closeBtn = document.querySelector("#closeField");
+const MaxBtn = document.querySelector("#maxField");
+const minBtn = document.querySelector("#minField");
 
-let heightTab = document.querySelector(".coming-soon-tab");
+const heightTab = document.querySelector(".coming-soon-tab");
 
-let appIcon = document.querySelectorAll(".app-icon");
-let nomeTab = document.querySelector(".nome-tab");
-let tabImage = document.querySelector("#tab-image");
-let spanComingSoon = document.querySelector(".coming-soon-span");
+const appIcon = document.querySelectorAll(".app-icon");
+const nomeTab = document.querySelector(".nome-tab");
+const tabImage = document.querySelector("#tab-image");
+const spanComingSoon = document.querySelector(".coming-soon-span");
 
-let nav = document.querySelector("nav");
-let iconNav = document.querySelector("#first-container");
+const nav = document.querySelector("nav");
+const iconNav = document.querySelector("#first-container");
 
-let notifBtns = document.querySelector("#second-container");
-let notifContainer = document.querySelector("#notification-section");
+const notifBtns = document.querySelector("#second-container");
+const notifContainer = document.querySelector("#notification-section");
 
-let accuDiv = document.querySelector("#accuDiv");
-let accuInline = document.querySelector("#accuInline");
+const accuDiv = document.querySelector("#accuDiv");
+const accuInline = document.querySelector("#accuInline");
 
-var vh = window.innerHeight / 100;
-var vw = window.innerWidth / 100;
+let vh = window.innerHeight / 100;
+let vw = window.innerWidth / 100;
 
 let isTopBarClicked = false;
 
-let div = document.querySelector("#div");
+const div = document.querySelector("#div");
 
 let firstPositionX;
 let firstPositionY;
@@ -55,7 +55,7 @@ let lastPositionY;
 function checkBatteryStatus() {
     if ('getBattery' in navigator) {
         navigator.getBattery().then(function(battery) {
-            var batteryLevel = battery.level * 100;
+            let batteryLevel = Math.round(battery.level * 100);
 
             var iconClass;
             if (batteryLevel >= 75) {
@@ -74,7 +74,7 @@ function checkBatteryStatus() {
 
             var chargingStatus = battery.charging ? 'Lädt' : 'Entlädt';
             if (battery.charging === false) {
-                if ( battery.dischargingTime === Infinity) {
+                if (battery.dischargingTime === Infinity) {
                     var dischargingTime = 26000;
                 } else {
                     var dischargingTime = battery.dischargingTime;

@@ -58,6 +58,7 @@ nav #nav-container {
 
 #first-container,
 #second-container {
+  position: absolute;
   display: flex;
   height: 100%;
   width: auto;
@@ -66,8 +67,19 @@ nav #nav-container {
   justify-content: center;
 }
 
+#first-container div,
+#second-container div {
+    cursor: pointer;
+}
+
+#first-container {
+   left: 50%;
+   transform: translate(-50%);
+}
+
 #second-container {
   gap: 0rem !important;
+  right: 0;
 }
 
 #first-container div svg,
@@ -664,6 +676,9 @@ label input {
 }
 
 .coming-soon-tab {
+  overflow: auto;
+  overflow: 
+  margin-top: 2rem;
   display: grid;
   place-self: center;
   place-items: center;
@@ -719,12 +734,22 @@ label input {
   grid-auto-flow: column;
   grid-template-columns: 1fr auto;
   color: white;
+  position: fixed;
+}
+
+.nome-tab {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
 }
 
 .top-left-menu-tab {
   display: grid;
   place-items: center;
   grid-auto-flow: column;
+  right: 0;
+  cursor: pointer;
+  position: absolute;
 }
 
 .top-left-menu-tab svg {
@@ -734,11 +759,14 @@ label input {
   transition-duration: 0.5s;
 }
 
-.top-left-menu-tab svg:hover {
+#minField:hover #min-icon,
+#maxField:hover #max-icon,
+#closeField:hover #close-icon {
   transition-duration: 0.3s;
   opacity: 1 !important;
   filter: drop-shadow(0 0 0.1em black);
 }
+
 
 .top-left-menu-tab div {
   height: 2em;
@@ -869,4 +897,8 @@ label input {
   display: none;
   position: absolute;
   border-radius: 0.2em;
+}
+
+.tab-content {
+    overflow: hidden;
 }
