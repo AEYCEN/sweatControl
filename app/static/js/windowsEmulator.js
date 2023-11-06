@@ -28,7 +28,7 @@ const heightTab = document.querySelector(".coming-soon-tab");
 const appIcon = document.querySelectorAll(".app-icon");
 const nomeTab = document.querySelector(".nome-tab");
 const tabImage = document.querySelector("#tab-image");
-const spanComingSoon = document.querySelector(".coming-soon-span");
+const scGeneralContainer = document.querySelector(".sc-general-container");
 
 const nav = document.querySelector("nav");
 const iconNav = document.querySelector("#first-container");
@@ -173,7 +173,7 @@ document.addEventListener("mouseup", function () {
 });
 
 for (let i = 0; i < appIcon.length; i++) {
-    spanComingSoon.style.display = "none";
+    scGeneralContainer.style.display = "none";
     tabImage.style.display = "none";
     appIcon[i].addEventListener("click", function () {
         windowsTab.style.display = "grid";
@@ -182,10 +182,10 @@ for (let i = 0; i < appIcon.length; i++) {
             tabImage.style.display = "grid";
             let appImage = appIcon[i].querySelector("img").src;
             tabImage.src = appImage;
-            spanComingSoon.style.display = "none";
+            scGeneralContainer.style.display = "none";
         } else {
             tabImage.style.display = "none";
-            spanComingSoon.style.display = "grid";
+            scGeneralContainer.style.display = "grid";
 
         }
         nomeTab.textContent = appName;
@@ -200,7 +200,7 @@ function openSweatControl() {
     let appName = 'SweatControl';
     tabImage.src = "../static/img/sweatControl-small.png";
     tabImage.style.display = "none";
-    spanComingSoon.style.display = "grid";
+    scGeneralContainer.style.display = "grid";
     nomeTab.textContent = appName;
 }
 
@@ -213,12 +213,12 @@ closeBtn.addEventListener("click", function () {
 minBtn.addEventListener("click", function () {
   windowsTab.style.display = "none";
   /*Element div mit img zu iconNav hinzufügen*/
-  let newDivNav = document.createElement("div");
-  let newImageIconNav = document.createElement("img");
-  newImageIconNav.src = tabImage.src;
-  newDivNav.appendChild(newImageIconNav);
-  iconNav.appendChild(newDivNav);
-  console.log("MINIMIZED TAB");
+//  let newDivNav = document.createElement("div");
+//  let newImageIconNav = document.createElement("img");
+//  newImageIconNav.src = tabImage.src;
+//  newDivNav.appendChild(newImageIconNav);
+//  iconNav.appendChild(newDivNav);
+//  console.log("MINIMIZED TAB");
 });
 
 // vergrößert die Registerkarte je nach Bildschirmgröße
@@ -237,7 +237,7 @@ function leftTab() {
   windowsTab.style.removeProperty("right");
   windowsTab.style.removeProperty("transform");
   windowsTab.style.width = "50vw";
-  windowsTab.style.height = "calc(100vh - var(--nav-height))";
+  windowsTab.style.height = "calc(100vh - var(--nav-height) - 0.225rem)";
   windowsTab.style.transitionDuration = "0.5s";
   console.log("LEFT TAB");
 }
@@ -247,8 +247,8 @@ function topTab() {
   windowsTab.style.top = 0 + "px";
   windowsTab.style.removeProperty("right");
   windowsTab.style.removeProperty("transform");
-  windowsTab.style.width = "100vw";
-  windowsTab.style.height = "calc(100vh - var(--nav-height))";
+  windowsTab.style.width = "calc(100vw - 0.2rem)";
+  windowsTab.style.height = "calc(100vh - var(--nav-height) - 0.225rem)";
   windowsTab.style.transitionDuration = "0.5s";
   console.log("TOP TAB");
 }
@@ -259,7 +259,7 @@ function rightTab() {
   windowsTab.style.top = 0 + "px";
   windowsTab.style.removeProperty("right");
   windowsTab.style.width = "50vw";
-  windowsTab.style.height = "calc(100vh - var(--nav-height))";
+  windowsTab.style.height = "calc(100vh - var(--nav-height) - 0.225rem)";
   windowsTab.style.transitionDuration = "0.5s";
   console.log("RIGHT TAB");
 }

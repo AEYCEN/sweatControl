@@ -169,17 +169,15 @@ nav #nav-container {
   color: #eff7ff;
 }
 
-#w11-start-section {
-  color: white;
-  align-self: center;
-  justify-self: center;
-}
-
 #windows-logo {
   filter: brightness(1.6);
 }
 
 #w11-start-section {
+  color: white;
+  align-self: center;
+  justify-self: center;
+  z-index: 10;
   display: grid;
   backdrop-filter: blur(5em);
   transition-duration: 0.5s;
@@ -458,6 +456,7 @@ label input {
   backdrop-filter: blur(1em);
   background-color: rgba(0, 1, 63, 0.26);
   display: grid;
+  z-index: 10;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -676,18 +675,17 @@ label input {
 }
 
 .coming-soon-tab {
-  overflow: auto;
-  overflow: 
-  margin-top: 2rem;
-  display: grid;
-  place-self: center;
-  place-items: center;
-  font-size: 1.5em;
-  animation: opacity 1s ease-in-out;
-  color: white;
-  /*center this div */
-  height: calc(100% - 2em);
-  transition-duration: 0.01s;
+    overflow: auto;
+    margin-top: 2rem;
+    display: grid;
+    place-self: center;
+    place-items: center;
+    font-size: 1.5em;
+    animation: opacity 1s ease-in-out;
+    color: white;
+    /*center this div */
+    height: calc(100% - 2em);
+    transition-duration: 0.01s;
 }
 
 .not-visible {
