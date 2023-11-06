@@ -2,7 +2,7 @@ import os
 import sys
 
 from flask import Flask, render_template, jsonify
-from app.HeaterController import HeaterController
+from app.HeaterController import HeaterController, get_current_city
 
 
 def create_app(test_config=None):
@@ -35,7 +35,7 @@ def create_app(test_config=None):
         external_temperature = round(heater_controller.get_external_temperature(),1)
         heater_temperature = heater_controller.get_heater_temperature()
         room_temperature = heater_controller.get_wanted_room_temperature()
-        city_name = heater_controller.get_current_city()
+        city_name = get_current_city()
         return render_template('base.html',
                                external_temperature=external_temperature,
                                heater_temperature=heater_temperature,

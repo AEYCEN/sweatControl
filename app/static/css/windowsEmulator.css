@@ -790,12 +790,39 @@ label input {
   height: 40vh;
 }
 
-#notification-section {
+#systemInfo-section {
   display: grid;
+  z-index: 10;
   text-align: center;
   place-content: center;
   height: 30vh;
   width: 30vh;
+  backdrop-filter: blur(3em);
+  position: fixed;
+  right: 1rem;
+  transform: translateY(150%);
+  bottom: calc(var(--nav-height) + 1rem);
+  border-radius: 0.5em;
+  background-color: rgba(0, 17, 255, 0.1);
+  border: 2px solid var(--glass-white-color);
+  font-size: 1.2em;
+  color: white;
+  transition-duration: 0.2s;
+}
+
+.sysinfo-on {
+  transform: translateY(0%) !important;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.4, 0.01, 0.15, 1.1);
+}
+
+#notification-section {
+  display: grid;
+  z-index: 10;
+  text-align: center;
+  place-content: center;
+  height: 90vh;
+  width: 40vh;
   backdrop-filter: blur(3em);
   position: fixed;
   right: 1rem;
