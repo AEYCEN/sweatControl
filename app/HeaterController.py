@@ -4,6 +4,9 @@ from app.OpenWeatherAPI import OpenWeatherAPI
 
 
 class HeaterController:
+
+    room_temperature = 25
+
     def __init__(self):
         city_name = self.get_current_city()
         self.api = OpenWeatherAPI(city_name)
@@ -16,16 +19,28 @@ class HeaterController:
     def get_external_temperature(self):
         return self.api.get_external_temperature()
 
-    def get_heater_temperature(self):
-        # Hier die Temperatur der Heizung von deinem Modell abrufen
-        pass
+    def get_room_temperature(self):
+        return self.room_temperature
 
-    def update_heater_temperature(self, new_temperature):
-        # Hier die Temperatur der Heizung aktualisieren
-        pass
+    def get_heater_temperature(self):
+        return self.model.predict_vorlauftemperatur(self.get_external_temperature(), self.get_room_temperature())
+
+
+    def update_room_temperature(self, new_temperature):
+        self.room_temperature = new_temperature
+
+    def get_data_diagram(self):
+        x = [-20,-19,-18,-17,-16,-15,-14,-13,-12,-11,-10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+        predicted_values = []
+
+        for temperature_aussen in x:
+            predicted_temperature = self.model.predict_vorlauftemperatur(temperature_aussen, self.get_room_temperature())
+            predicted_values.append(predicted_temperature)
+
+        return predicted_values
 
     def get_wanted_room_temperature(self):
-        pass
+        return 25
 
 
 if __name__ == "__main__":
