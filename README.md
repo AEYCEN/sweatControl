@@ -41,12 +41,12 @@ First, create and activate a Python environment to run the application. Navigate
 🐧 *Linux:*
 
     python3 -m venv venv
-    . .venv/bin/activate
+    . venv/bin/activate
 
 🪟 *Windows:*
 
     py -3 -m venv venv
-    .venv\Scripts\activate
+    venv\Scripts\activate
 
 Then install all the required plugins:
 
