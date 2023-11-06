@@ -5,7 +5,7 @@ from app.OpenWeatherAPI import OpenWeatherAPI
 
 class HeaterController:
 
-    room_temperature = 25
+    room_temperature = 30
 
     def __init__(self):
         city_name = self.get_current_city()
@@ -23,7 +23,7 @@ class HeaterController:
         return self.room_temperature
 
     def get_heater_temperature(self):
-        return self.model.predict_vorlauftemperatur(self.get_external_temperature(), self.get_room_temperature())
+        return self.model.predict_vorlauftemperatur(self.get_external_temperature(), self.get_room_temperature(), 30, 80)
 
 
     def update_room_temperature(self, new_temperature):
@@ -34,13 +34,13 @@ class HeaterController:
         predicted_values = []
 
         for temperature_aussen in x:
-            predicted_temperature = self.model.predict_vorlauftemperatur(temperature_aussen, self.get_room_temperature())
+            predicted_temperature = self.model.predict_vorlauftemperatur(temperature_aussen, self.get_room_temperature(), 30, 80)
             predicted_values.append(predicted_temperature)
 
         return predicted_values
 
     def get_wanted_room_temperature(self):
-        return 25
+        return 30
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 import os
 import sys
 
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from app.HeaterController import HeaterController
 
 
@@ -41,5 +41,11 @@ def create_app(test_config=None):
                                heater_temperature=heater_temperature,
                                room_temperature=room_temperature,
                                city_name=city_name)
+
+    @app.route('/test', methods=['POST'])
+    def test():
+        data = heater_controller.get_data_diagram()
+        # Return the data as a JSON response
+        return jsonify(data)
 
     return app
