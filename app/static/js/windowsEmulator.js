@@ -33,8 +33,10 @@ const scGeneralContainer = document.querySelector(".sc-general-container");
 const nav = document.querySelector("nav");
 const iconNav = document.querySelector("#first-container");
 
-const notifBtns = document.querySelector("#second-container");
+const systemInformation = document.querySelector("#sistema-info");
+const dateInformation = document.querySelector("#sistema-data");
 const notifContainer = document.querySelector("#notification-section");
+const sysInfoContainer = document.querySelector("#systemInfo-section");
 
 const accuDiv = document.querySelector("#accuDiv");
 const accuInline = document.querySelector("#accuInline");
@@ -226,8 +228,13 @@ MaxBtn.addEventListener("click", function () {
   topTab();
 });
 
+// um Systeminfo zu öffnen
+systemInformation.addEventListener("click", function () {
+  sysInfoContainer.classList.toggle("sysinfo-on");
+});
+
 // um Benachrichtigungen zu öffnen
-notifBtns.addEventListener("click", function () {
+dateInformation.addEventListener("click", function () {
   notifContainer.classList.toggle("notification-on");
 });
 
@@ -297,18 +304,19 @@ function dragSelectorLogic() {
       ) {
         widgetContainer.classList.remove("on-visible-widget");
         dragSelectorCode();
-      } // se NOTIFICHE è visibile, allora si chiude in automatico
+      } // wenn NOTIFICATIONS sichtbar ist, wird es automatisch geschlossen
       else if (
-        e1.target.closest("#notification-section") != notifContainer &&
+        e1.target.closest("#systemInfo-section") != notifContainer &&
         notifContainer.classList.contains("notification-on") &&
         e1.target.closest("nav") != nav
       ) {
         notifContainer.classList.remove("notification-on");
         dragSelectorCode();
-      } // se si usa il Drag dentro START, WIDGET o NOTIFICHE, allora la funzione NON è attiva.
+      } // Wenn Sie Drag innerhalb von START, WIDGETS oder NOTIFICATIONS verwenden, ist die Funktion NICHT aktiv.
       else if (
         e1.target.closest("#w11-start-section") == startContainer ||
         e1.target.closest("#notification-section") == notifContainer ||
+        e1.target.closest("#systemInfo-section") == sysInfoContainer ||
         e1.target.closest("#widget-section") == widgetContainer
       ) {
         console.log("You can't drag the tab here!");
