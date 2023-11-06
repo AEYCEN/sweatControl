@@ -26,8 +26,8 @@ class HeaterController:
         return self.room_temperature
 
     def get_heater_temperature(self):
-        return self.model.predict_vorlauftemperatur(self.get_external_temperature(), self.get_room_temperature(),
-                                                    self.min_heater_temperature, self.max_heater_temperature)
+        return self.model.predict_heater_temperature(self.get_external_temperature(), self.get_room_temperature(),
+                                                     self.min_heater_temperature, self.max_heater_temperature)
 
     def update_room_temperature(self, new_temperature):
         self.room_temperature = new_temperature
@@ -38,10 +38,10 @@ class HeaterController:
         predicted_values = []
 
         for temperature_aussen in x:
-            predicted_temperature = self.model.predict_vorlauftemperatur(temperature_aussen,
-                                                                         self.get_room_temperature(),
-                                                                         self.min_heater_temperature,
-                                                                         self.max_heater_temperature)
+            predicted_temperature = self.model.predict_heater_temperature(temperature_aussen,
+                                                                          self.get_room_temperature(),
+                                                                          self.min_heater_temperature,
+                                                                          self.max_heater_temperature)
             predicted_values.append(predicted_temperature)
 
         return predicted_values

@@ -21,6 +21,6 @@ class HeaterModel:
         self.model = LinearRegression()
         self.model.fit(x, y)
 
-    def predict_vorlauftemperatur(self, external_temperature, selected_heater_temperature, min_temp, max_temp):
+    def predict_heater_temperature(self, external_temperature, selected_heater_temperature, min_temp, max_temp):
         predicted_vorlauftemperatur = self.model.predict([[external_temperature, selected_heater_temperature]])
         return max(min(predicted_vorlauftemperatur[0], max_temp), min_temp)
