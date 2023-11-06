@@ -7,9 +7,11 @@
     <title>SweatControl</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/windowsEmulator.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sweatControl.css') }}">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <script type="text/javascript" src="../static/js/windowsEmulator.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js" defer></script>
@@ -314,7 +316,7 @@
     <section id="spegni-section" class="">
         <img class="spegni-gif" src="../static/gif/shutdown.gif">
     </section>
-    <div class="windows-tab">
+    <div class="windows-tab" style="left: 1290px; top: 22px; display: grid; height: 897px; width: 616px;">
         <div class="tab-content">
             <div class="topnavbar-tab">
                 <div class="nome-tab">coming soon...</div>
@@ -343,94 +345,30 @@
                 </div>
             </div>
             <div class="coming-soon-tab">
-                <div class="coming-soon-span sweatControlGeneralContainer" data-test-identifier>
-                    <!-- SweatControl Ihnalt -->
-                    <canvas id="temperature-chart"></canvas>
-                    <div id="sliders">
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
-                        </div>
-                        <div class="slider-container">
-                            <input type="range" min="20" max="80" value="20" class="slider">
+                <div class="sc-general-container">
+                    <!-- SweatControl Inhalt -->
+                    <div class="nav">
+                        <button class="sc-settings-button">
+                            <span>Einstellungen</span>
+                        </button>
+                    </div>
+                    <div class="sc-diagram">
+                        <canvas id="sc-chart"></canvas>
+                        <div class="sc-chart-inputs">
+                            <label for="minTempInput">Min. Kesseltemperatur:</label>
+                            <input type="number" id="minTempInput" value="20">
+                            <br>
+                            <label for="maxTempInput">Max. Kesseltemperatur:</label>
+                            <input type="number" id="maxTempInput" value="80">
                         </div>
                     </div>
-                    <br>
-                    <p>Außentemperatur in {{ city_name }}: {{ external_temperature }} °C</p>
-                    <p>Heizkessel-Temperatur: {{ heater_temperature }} °C</p>
-                    <p>Angepeilte Raumtemperatur: {{ room_temperature }} °C</p>
+                    <div class="sc-information">
+                        <p>Außentemperatur in {{ city_name }}: <span id="heaterTemperature">{{ external_temperature }}</span> °C</p>
+                        <p>Heizkessel-Temperatur: {{ heater_temperature }} °C</p>
+                        <p>Angepeilte Raumtemperatur: {{ room_temperature }} °C</p>
+                    </div>
                 </div>
+
                 <img id="tab-image" src="" alt="">
             </div>
         </div>

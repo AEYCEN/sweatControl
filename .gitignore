@@ -1,6 +1,9 @@
 # Secret File for API-Token -> Must be manually implemented
 secret/
 
+# Detailed list of all required libraries
+packages.txt
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

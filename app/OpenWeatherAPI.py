@@ -1,6 +1,10 @@
 import os
 import requests
 
+# ANSI color codes
+RED = '\033[91m'
+RESET = '\033[0m'
+
 
 class OpenWeatherAPI:
     def __init__(self, city_name):
@@ -24,5 +28,5 @@ class OpenWeatherAPI:
             external_temperature = data["main"]["temp"]
             return external_temperature
         except Exception as e:
-            print(f"Error fetching external temperature: {e}")
+            print(f"{RED}Error: OpenWeather API data {e} could not be retrieved. The API key is probably incorrect!"f"{RESET}")
             return None
