@@ -693,21 +693,21 @@ label input {
 }
 
 .windows-tab {
-  border: 2px solid rgba(255, 255, 255, 0.37);
-  min-height: 250px;
-  height: 30vh;
-  backdrop-filter: blur(2em);
-  min-width: 250px;
-  width: 32vw;
-  position: absolute;
-  display: none;
-  border-radius: 0.5em;
-  left: 50%;
-  top: 10%;
+    top: 2vh;
+    height: 90vh;
+    width: 616px;
+    border: 2px solid rgba(255, 255, 255, 0.37);
+    min-height: 250px;
+    backdrop-filter: blur(2em);
+    min-width: 250px;
+    position: absolute;
+    display: grid;
+    border-radius: 0.5em;
+    right: 1vw;
 
-  resize: both;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.2);
+    resize: both;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 
 .middle-width-all-height {

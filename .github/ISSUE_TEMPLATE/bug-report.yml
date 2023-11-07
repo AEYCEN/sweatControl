@@ -9,7 +9,30 @@ body:
         # SweatControl Bug Report
         
         Bitte prüfe, ob für diesen Bug bereits Tickets vorhanden sind [hier](https://github.com/AEYCEN/sweatControl/labels/bug) bevor Du ein neues erstellst.
-
+        Alle Punkte ohne den `(optional)` Hinweis sind Pflichtfelder
+  - type: dropdown
+    id: os
+    attributes:
+      label: Betriebssystem
+      description: Welches Betriebssystem nutzt du?
+      options:
+        - Windows
+        - Linux
+    validations:
+      required: true
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: Browser
+      description: Bei welchen Browsern bekommst du den Fehler?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Safari
+        - Microsoft Edge
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Fehlerbeschreibung
@@ -17,19 +40,18 @@ body:
         - Beschreibe den Fehler im Detail
         - Füge nach Möglichkeit Schritte hinzu, um den Fehler zu reproduzieren (Schritt 1. ... Schritt 2. ...)
         - Füge nach Möglichkeit Bilder und Videos hinzu
-        - Windows oder Linux?
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Error logs
-      description: Fehlermeldungen aus der Shell
+      label: Error logs (optional)
+      description: Füge Fehlermeldungen aus der Shell hinzu
       render: shell
   - type: textarea
     attributes:
-      label: Lösungsvorschlag
+      label: Lösungsvorschlag (optional)
       description: Füge gegebenenfalls eine mögliche Lösung für den Fehler hinzu
   - type: textarea
     attributes:
-      label: Zusätzlicher Kontext
-      description: Füge zusätzlichen Kontext hier hinzu
+      label: Zusätzlicher Kontext (optional)
+      description: Füge hier zusätzlichen Kontext hinzu
