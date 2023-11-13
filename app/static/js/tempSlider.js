@@ -5,13 +5,13 @@ document.addEventListener("DOMContentLoaded",function(){
 class NeuThermostat {
 	constructor(el) {
 		this.el = document.querySelector(el);
-		this.temp = 60;
-		this.tempMin = 60;
-		this.tempMax = 90;
+		this.temp = 60; // room_temperature
+		this.tempMin = 15;
+		this.tempMax = 50;
 		this.angleMin = 15;
 		this.angleMax = 345;
-		this.outside = this.randInt(60,75);
-		this.humidity = this.randInt(70,90);
+		this.outside = this.randInt(60,75); // external_temperature
+		this.humidity = this.randInt(70,90); // heater_temperature
 		this.init();
 	}
 	init() {
