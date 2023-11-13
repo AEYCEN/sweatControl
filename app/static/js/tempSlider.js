@@ -157,7 +157,6 @@ class NeuThermostat {
 			let relTemp = this.temp - this.tempMin,
 				tempFrac = relTemp / tempRange,
 				angle = tempFrac * angleRange + this.angleMin;
-
 			// CSS variable
 			this.el.style.setProperty("--angle",`${angle}deg`);
 
@@ -183,6 +182,7 @@ class NeuThermostat {
 					decClass = "temp__digit--dec",
 					timeoutA = 150,
 					timeoutB = 300;
+
 
 				while (digitDiff--)
 					digitArr.push("");
@@ -223,8 +223,8 @@ class NeuThermostat {
 		this.humidity = inputHumidity;
 
 		if (outdoorVals) {
-			outdoorVals[0].textContent = `${this.outside}°C`;
-			outdoorVals[1].textContent = `${this.humidity}°C`;
+			outdoorVals[0].textContent = `${this.outside} °C`;
+			outdoorVals[1].textContent = `${this.humidity} °C`;
 		}
 	}
 }

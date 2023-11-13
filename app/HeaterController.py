@@ -12,7 +12,7 @@ class HeaterController:
     # Später User eingaben
     room_temperature = 25
     min_heater_temperature = 30
-    max_heater_temperature = 30
+    max_heater_temperature = 80
 
     def __init__(self):
         city_name = get_current_city()

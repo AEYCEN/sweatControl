@@ -147,8 +147,8 @@
 .temp__dial-core,
 .temp__dial-shades {
 	transition-delay: 0.1s;
-	width: 8.5rem;
-	height: 8.5rem;
+	width: 190px;
+	height: 190px;
 }
 .temp__dial-core {
 	box-shadow: 0 0.2rem 0.5rem 0.1rem inset;
@@ -243,11 +243,11 @@
 		0 -0.1em 0.1em var(--l2) inset;
 	display: flex;
 	justify-content: space-between;
-	padding: 0.75em 1.75em;
+	padding: 0.75em 1.25em;
 	text-align: center;
 }
 .temp__o-value {
-	font-size: 1.5em;
+	font-size: 1.2em;
 }
 
 /* Dark theme */
