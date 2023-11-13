@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../static/img/icons/favicon.ico">
     <title>SweatControl</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/windowsEmulator.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sweatControl.css') }}">
@@ -329,7 +329,7 @@
     <section id="spegni-section" class="">
         <img class="spegni-gif" src="../static/gif/shutdown.gif">
     </section>
-    <div class="windows-tab">
+    <div id="scrollElement" class="windows-tab">
         <div class="tab-content">
             <div class="topnavbar-tab">
                 <div class="nome-tab">coming soon...</div>
@@ -359,66 +359,113 @@
             </div>
             <div class="coming-soon-tab">
                 <div class="sc-general-container">
-                    <!-- SweatControl Inhalt -->
-                    <div class="nav-img">
-                        <img src="./static/img/sweatControl-full.png" width="140">
-                    </div>
-                    <div class="sc-nav">
-                        <button class="sc-nav-button sc-button-active" onclick="activateMenu('sc-controls-menu')">
-                            <span>Steuerung</span>
-                        </button>
-                        <button class="sc-nav-button" onclick="activateMenu('sc-weather-menu')">
-                            <span>Wetter</span>
-                        </button>
-                        <button class="sc-nav-button" onclick="activateMenu('sc-settings-menu')">
-                            <span>Einstellungen</span>
-                        </button>
+                    <!-- ================ SweatControl ================ -->
+                    <div class="sc-head">
+                        <div class="sc-nav-img">
+                            <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="140px">
+                        </div>
+                        <div class="sc-nav">
+                            <button id="sc-nav-button-controls" class="sc-nav-button sc-button-active" onclick="activateMenu('sc-controls-menu')">
+                                <img src="./static/img/icons/controls.png" width="20">
+                                <span>Steuerung</span>
+                            </button>
+                            <button id="sc-nav-button-weather" class="sc-nav-button" onclick="activateMenu('sc-weather-menu')">
+                                <img src="./static/img/icons/weather.png" width="21">
+                                <span>Wetter</span>
+                            </button>
+                            <button id="sc-nav-button-settings" class="sc-nav-button" onclick="activateMenu('sc-settings-menu')">
+                                <img src="./static/img/icons/settings.png" width="20">
+                                <span>Settings</span>
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Steuerungs-Menü -->
                     <div id="sc-controls-menu" style="display: grid;">
-                        <div class="temp">
-                            <div class="temp__dial">
-                                <div class="temp__drag"></div>
-                                <div class="temp__dial-shades">
-                                    <div class="temp__shade-cold"></div>
-                                    <div class="temp__shade-hot"></div>
+                        <div class="sc-card">
+                            <h4 class="sc-title">Raumtemperatur</h4>
+                            <div class="temp">
+                                <div class="temp__dial">
+                                    <div class="temp__drag"></div>
+                                    <div class="temp__dial-shades">
+                                        <div class="temp__shade-cold"></div>
+                                        <div class="temp__shade-hot"></div>
+                                    </div>
+                                    <div class="temp__dial-core"></div>
+                                    <div class="temp__value">
+                                        <span class="temp__digit">2</span><span class="temp__digit">5</span>°
+                                    </div>
                                 </div>
-                                <div class="temp__dial-core"></div>
-                                <div class="temp__value">
-                                    <span class="temp__digit">6</span><span class="temp__digit">0</span>°
+                                <div class="temp__outdoors">
+                                    <div class="temp__outdoors-col">
+                                        <small class="temp__heading">Außen</small>
+                                        <br>
+                                        <span class="temp__o-value">{{ external_temperature }} °C</span>
+                                    </div>
+                                    <br>
+                                    <div class="temp__outdoors-col">
+                                        <small class="temp__heading">Heizkessel</small>
+                                        <br>
+                                        <span class="temp__o-value">{{ heater_temperature }} °C</span>
+                                    </div>
+                                </div>
+                                <div class="temp__extraInfo">
+                                    <small class="temp__headingLocation"><img src="./static/img/icons/pin.png" width="12"> {{ city_name }}</small>
+                                    <small class="temp__headingLocation"><img src="./static/img/icons/heater.png" width="13"> {{ heater_variant }}</small>
+                                </div>
+                                <h4 class="sc-title">Heizkurve</h4>
+                                <div class="sc-chart-container">
+                                    <canvas id="sc-chart"></canvas>
                                 </div>
                             </div>
-                            <div class="temp__outdoors">
-                                <div class="temp__outdoors-col">
-                                    <small class="temp__heading">Außen ({{ city_name }})</small>
-                                    <br>
-                                    <span class="temp__o-value">{{ external_temperature }} °C</span>
-                                </div>
-                                <div class="temp__outdoors-col">
-                                    <small class="temp__heading">Heizkessel</small>
-                                    <br>
-                                    <span class="temp__o-value">{{ heater_temperature }} °C</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="sc-diagram">
-                            <canvas id="sc-chart"></canvas>
                         </div>
                     </div>
 
                     <!-- Wetter-Menü -->
                     <div id="sc-weather-menu">
-
+                        <p style="text-align: center">Coming Soon...</p>
                     </div>
 
                     <!-- Einstellungs-Menü -->
                     <div id="sc-settings-menu">
-                        <label for="minTempInput">Min. Kesseltemperatur:</label>
-                        <input type="number" id="minTempInput" value="20">
-                        <br>
-                        <label for="maxTempInput">Max. Kesseltemperatur:</label>
-                        <input type="number" id="maxTempInput" value="80">
+                        <div class="sc-card sc-settings-card">
+                            <h4 class="sc-title" style="margin: 0;">Einstellungen</h4>
+                            <p class="sc-subtitle">Kesseltemperatur</p>
+                            <div class="sc-input-column-row">
+                                <div class="sc-input-column">
+                                    <label for="minTempInput">Minimal möglich (°C)</label>
+                                    <input type="number" id="minTempInput" value="20">
+                                </div>
+                                <div class="sc-input-column">
+                                    <label for="maxTempInput">Maximal möglich (°C)</label>
+                                    <input type="number" id="maxTempInput" value="80">
+                                </div>
+                            </div>
+                            <p class="sc-subtitle">Mein Zuhause</p>
+                            <div class="sc-input-column-row">
+                                <div class="sc-input-column">
+                                    <label for="cityInput">Stadt</label>
+                                    <input type="text" id="cityInput" value="{{ city_name }}">
+                                </div>
+                                <div class="sc-input-column">
+                                    <label for="heaterVariantInput">Heizungsart</label>
+                                    <select id="heaterVariantInput">
+                                        <option disabled selected>- Typ auswählen -</option>
+                                        <option>BHKW</option>
+                                        <option>Brennstoffzelle</option>
+                                        <option>Fernwärme</option>
+                                        <option>Gasheizung</option>
+                                        <option>Ölheizung</option>
+                                        <option>Pelletheizung</option>
+                                        <option>Solarthermie</option>
+                                        <option>Wärmepumpe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="sc-submit-button" onclick="">
+                                <span>Änderungen übernehmen</span>
+                            </button>
+                        <div>
                     </div>
                 </div>
 

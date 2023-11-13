@@ -36,11 +36,13 @@ def create_app(test_config=None):
         heater_temperature = round(heater_controller.get_heater_temperature(), 1)
         room_temperature = heater_controller.get_wanted_room_temperature()
         city_name = get_current_city()
+        heater_variant = heater_controller.get_heater_variant()
         return render_template('base.html',
                                external_temperature=external_temperature,
                                heater_temperature=heater_temperature,
                                room_temperature=room_temperature,
-                               city_name=city_name)
+                               city_name=city_name,
+                               heater_variant=heater_variant)
 
     @app.route('/test', methods=['POST'])
     def test():

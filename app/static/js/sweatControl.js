@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById('sc-chart');
     const ctx = canvas.getContext('2d');
     const data = {
-        x: [20,18,16,14,12,10,8,6,4,2,0,-2,-4,-6,-8,-10,-12,-14,-16,-18,-20], // Außentemperatur
+        x: [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0, -2, -4, -6, -8, -10, -12, -14, -16, -18, -20], // Außentemperatur
         y: [], // Kesseltemperatur
     };
 
@@ -15,22 +15,44 @@ document.addEventListener("DOMContentLoaded", function () {
         data: {
             labels: data.x,
             datasets: [{
-                label: 'Kesseltemperatur',
                 data: data.y,
-                borderColor: 'rgba(75, 192, 192, 1)',
+                borderColor: '#d37147',
                 borderWidth: 2,
-                fill: false,
+                fill: true,
                 tension: 0.4,
             }]
         },
         options: {
-            plugins: {legend: {display: false}},
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        color: '#d3d3d3',
+                        font: {size: 16}
+                    }
+                }
+            },
             scales: {
                 x: {
-                    title: {display: true, color: 'white', font: {size: 16}},
-                    ticks: {color: 'lightgrey', font: {size: 12}}
+                    title: {
+                        display: true,
+                        text: 'Außentemperatur in °C',
+                        color: 'lightgrey',
+                        font: {size: 14}
+                    },
+                    ticks: {
+                        color: 'lightgrey',
+                        font: {size: 12}
+                    }
                 },
                 y: {
+                    ticks: {
+                        color: 'lightgrey',
+                        font: {
+                            size: 12
+                        }
+                    },
                     min: 20,
                     max: 80
                 }
@@ -43,13 +65,13 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch('http://127.0.0.1:5000/test', {
             method: 'POST',
         })
-        .then(response => response.json())
-        .then(values => {
-            updateChart(values)
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+            .then(response => response.json())
+            .then(values => {
+                updateChart(values)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     function updateChart(newYValues) {
@@ -58,9 +80,9 @@ document.addEventListener("DOMContentLoaded", function () {
             datasets: [{
                 label: 'Kesseltemperatur',
                 data: newYValues,
-                borderColor: 'rgba(75, 192, 192, 1)',
+                borderColor: '#d37147',
                 borderWidth: 2,
-                fill: false,
+                fill: true,
                 tension: 0.4,
             }],
         };

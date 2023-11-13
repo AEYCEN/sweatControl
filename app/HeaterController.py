@@ -13,6 +13,7 @@ class HeaterController:
     room_temperature = 25
     min_heater_temperature = 30
     max_heater_temperature = 80
+    heater_variant = 'Gasheizung'
 
     def __init__(self):
         city_name = get_current_city()
@@ -48,6 +49,9 @@ class HeaterController:
 
     def get_wanted_room_temperature(self):
         return self.room_temperature
+
+    def get_heater_variant(self):
+        return self.heater_variant
 
 
 if __name__ == "__main__":
