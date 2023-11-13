@@ -15,6 +15,7 @@
     <script type="text/javascript" src="../static/js/windowsEmulator.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js" defer></script>
+    <script type="text/javascript" src="../static/js/tempSlider.js" defer></script>
 </head>
 <body>
 <nav>
@@ -358,17 +359,38 @@
                     <div class="sc-diagram">
                         <canvas id="sc-chart"></canvas>
                         <div class="sc-chart-inputs">
+                            <div class="temp">
+                                <div class="temp__dial">
+                                    <div class="temp__drag"></div>
+                                    <div class="temp__dial-shades">
+                                        <div class="temp__shade-cold"></div>
+                                        <div class="temp__shade-hot"></div>
+                                    </div>
+                                    <div class="temp__dial-core"></div>
+                                    <div class="temp__value">
+                                        <span class="temp__digit">6</span><span class="temp__digit">0</span>°
+                                    </div>
+                                </div>
+                                <div class="temp__outdoors">
+                                    <div class="temp__outdoors-col">
+                                        <small class="temp__heading">Außen ({{ city_name }})</small>
+                                        <br>
+                                        <span class="temp__o-value">{{ external_temperature }} °C</span>
+                                    </div>
+                                    <div class="temp__outdoors-col">
+                                        <small class="temp__heading">Heizkessel</small>
+                                        <br>
+                                        <span class="temp__o-value">{{ heater_temperature }} °C</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
                             <label for="minTempInput">Min. Kesseltemperatur:</label>
                             <input type="number" id="minTempInput" value="20">
                             <br>
                             <label for="maxTempInput">Max. Kesseltemperatur:</label>
                             <input type="number" id="maxTempInput" value="80">
                         </div>
-                    </div>
-                    <div class="sc-information">
-                        <p>Außentemperatur in {{ city_name }}: <span id="heaterTemperature">{{ external_temperature }}</span> °C</p>
-                        <p>Heizkessel-Temperatur: {{ heater_temperature }} °C</p>
-                        <p>Angepeilte Raumtemperatur: {{ room_temperature }} °C</p>
                     </div>
                 </div>
 

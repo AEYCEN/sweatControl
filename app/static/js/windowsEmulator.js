@@ -82,7 +82,6 @@ function checkBatteryStatus() {
                     var dischargingTime = battery.dischargingTime;
                 }
                 var hours = Math.floor(dischargingTime / 3600);
-                console.log(dischargingTime);
                 var minutes = Math.floor((dischargingTime % 3600) / 60);
                 var timeRemaining = hours + 'h ' + minutes + 'min';
                 accuDiv.title = 'Akkustand: ' + batteryLevel + '% verbleibend (' + timeRemaining + ')';
