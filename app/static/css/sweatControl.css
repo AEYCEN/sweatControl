@@ -114,6 +114,8 @@
 		0.5em 0.5em 1em var(--l6),
 		-0.5em -0.5em 1em var(--l1);
 	margin-bottom: 2em;
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
 	width: 12em;
 	height: 12em;

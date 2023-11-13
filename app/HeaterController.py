@@ -33,8 +33,7 @@ class HeaterController:
         self.room_temperature = new_temperature
 
     def get_data_diagram(self):
-        x = [-20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
-             20]
+        x = [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
         predicted_values = []
 
         for temperature_aussen in x:
