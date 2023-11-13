@@ -14,6 +14,14 @@
 
     <script type="text/javascript" src="../static/js/windowsEmulator.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/Draggable.min.js"></script>
+
+    <script>
+        let externalTemp = {{ external_temperature }};
+        let roomTemp = {{ room_temperature }};
+        let heaterTemp = {{ heater_temperature }};
+    </script>
     <script type="text/javascript" src="../static/js/sweatControl.js" defer></script>
     <script type="text/javascript" src="../static/js/tempSlider.js" defer></script>
 </head>
@@ -375,12 +383,12 @@
                                     <div class="temp__outdoors-col">
                                         <small class="temp__heading">Außen ({{ city_name }})</small>
                                         <br>
-                                        <span class="temp__o-value">{{ external_temperature }} °C</span>
+                                        <span class="temp__o-value">{{ external_temperature }}°C</span>
                                     </div>
                                     <div class="temp__outdoors-col">
                                         <small class="temp__heading">Heizkessel</small>
                                         <br>
-                                        <span class="temp__o-value">{{ heater_temperature }} °C</span>
+                                        <span class="temp__o-value">{{ heater_temperature }}°C</span>
                                     </div>
                                 </div>
                             </div>
