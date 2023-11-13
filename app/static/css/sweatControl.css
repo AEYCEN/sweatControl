@@ -3,7 +3,23 @@
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr;
     gap: 20px;
-    padding: 3%;
+    width: 85%;
+    padding: 2% 3%;
+}
+
+
+
+.nav-img {
+	text-align: center;
+}
+
+.sc-nav {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#sc-controls-menu, #sc-weather-menu, #sc-settings-menu {
+	display: none;
 }
 
 ::-webkit-scrollbar {
@@ -34,33 +50,45 @@
     margin-top: 20px;
 }
 
-.sc-settings-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 6px 12px;
-  gap: 8px;
-  height: 36px;
-  width: 150px;
-  border: none;
-  background: #5e41de33;
-  border-radius: 20px;
-  cursor: pointer;
+.sc-nav-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 6px 12px;
+	gap: 8px;
+	height: 36px;
+	width: 30%;
+	border: none;
+	background: #d07735;
+	opacity: 0.35;
+	border-radius: 20px;
+	cursor: pointer;
+	transition: all 0.3s ease;
 }
 
-.sc-settings-button span {
-  line-height: 20px;
-  font-size: 17px;
-  color: #5D41DE;
-  font-family: sans-serif;
-  letter-spacing: 1px;
+.sc-button-active {
+	opacity: 0.75;
+	border: 2px solid #e3ad85;
 }
 
-.sc-settings-button:hover {
-  background: #5e41de4d;
+.sc-button-active span {
+
 }
 
-.sc-settings-button:hover svg {
+.sc-nav-button span {
+	line-height: 20px;
+	font-size: 17px;
+	color: white;
+	font-weight: bold;
+	font-family: sans-serif;
+	letter-spacing: 1px;
+}
+
+.sc-nav-button:hover {
+	opacity: 1;
+}
+
+.sc-nav-button:hover svg {
   animation: spin 2s linear infinite;
 }
 
@@ -76,26 +104,26 @@
 
 
 :root {
-	--l1: hsl(223,10%,100%);
-	--l2: hsl(223,10%,95%);
-	--l3: hsl(223,10%,90%);
-	--l4: hsl(223,10%,85%);
-	--l5: hsl(223,10%,80%);
-	--l6: hsl(223,10%,75%);
-	--text: hsl(223,10%,20%);
+    --l1: hsl(223,10%,50%);
+    --l2: hsl(223,10%,45%);
+    --l3: hsl(223,10%,40%);
+    --l4: hsl(223,10%,35%);
+    --l5: hsl(223,10%,30%);
+    --l6: hsl(223,10%,25%);
+    --text: hsl(223,10%,80%);
 }
 
 .temp {
 	--angle: 0deg;
     border: 0;
     box-sizing: border-box;
-	background-color: hsl(223deg 10% 40% / 75%);
+	background-color: hsl(223deg 10% 40% / 80%);
 	border-radius: 1em;
 	box-shadow: 0 0.25em 0.5em hsla(0,0%,0%,0.1);
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 1em 0;
+	margin: 0.5em 0;
 	padding: 2em;
 	width: 100%;
     font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320));
@@ -113,7 +141,7 @@
 	box-shadow:
 		0.5em 0.5em 1em var(--l6),
 		-0.5em -0.5em 1em var(--l1);
-	margin-bottom: 2em;
+	margin: auto auto 2em;
 	position: relative;
 	width: 12em;
 	height: 12em;
@@ -147,8 +175,8 @@
 .temp__dial-core,
 .temp__dial-shades {
 	transition-delay: 0.1s;
-	width: 190px;
-	height: 190px;
+	width: 8em;
+	height: 8em;
 }
 .temp__dial-core {
 	box-shadow: 0 0.2rem 0.5rem 0.1rem inset;
@@ -248,19 +276,6 @@
 }
 .temp__o-value {
 	font-size: 1.2em;
-}
-
-/* Dark theme */
-@media (prefers-color-scheme: dark) {
-	:root {
-		--l1: hsl(223,10%,50%);
-		--l2: hsl(223,10%,45%);
-		--l3: hsl(223,10%,40%);
-		--l4: hsl(223,10%,35%);
-		--l5: hsl(223,10%,30%);
-		--l6: hsl(223,10%,25%);
-		--text: hsl(223,10%,80%);
-	}
 }
 
 /* Animations */

@@ -22,8 +22,9 @@
         let roomTemp = {{ room_temperature }};
         let heaterTemp = {{ heater_temperature }};
     </script>
-    <script type="text/javascript" src="../static/js/sweatControl.js" defer></script>
-    <script type="text/javascript" src="../static/js/tempSlider.js" defer></script>
+    <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
+    <script type="text/javascript" src="../static/js/sweatControl.js"></script>
+    <script type="text/javascript" src="../static/js/tempSlider.js"></script>
 </head>
 <body>
 <nav>
@@ -359,46 +360,65 @@
             <div class="coming-soon-tab">
                 <div class="sc-general-container">
                     <!-- SweatControl Inhalt -->
-                    <div class="nav">
-                        <button class="sc-settings-button">
+                    <div class="nav-img">
+                        <img src="./static/img/sweatControl-full.png" width="140">
+                    </div>
+                    <div class="sc-nav">
+                        <button class="sc-nav-button sc-button-active" onclick="activateMenu('sc-controls-menu')">
+                            <span>Steuerung</span>
+                        </button>
+                        <button class="sc-nav-button" onclick="activateMenu('sc-weather-menu')">
+                            <span>Wetter</span>
+                        </button>
+                        <button class="sc-nav-button" onclick="activateMenu('sc-settings-menu')">
                             <span>Einstellungen</span>
                         </button>
                     </div>
-                    <div class="sc-diagram">
-                        <canvas id="sc-chart"></canvas>
-                        <div class="sc-chart-inputs">
-                            <div class="temp">
-                                <div class="temp__dial">
-                                    <div class="temp__drag"></div>
-                                    <div class="temp__dial-shades">
-                                        <div class="temp__shade-cold"></div>
-                                        <div class="temp__shade-hot"></div>
-                                    </div>
-                                    <div class="temp__dial-core"></div>
-                                    <div class="temp__value">
-                                        <span class="temp__digit">6</span><span class="temp__digit">0</span>°
-                                    </div>
+
+                    <!-- Steuerungs-Menü -->
+                    <div id="sc-controls-menu" style="display: grid;">
+                        <div class="temp">
+                            <div class="temp__dial">
+                                <div class="temp__drag"></div>
+                                <div class="temp__dial-shades">
+                                    <div class="temp__shade-cold"></div>
+                                    <div class="temp__shade-hot"></div>
                                 </div>
-                                <div class="temp__outdoors">
-                                    <div class="temp__outdoors-col">
-                                        <small class="temp__heading">Außen ({{ city_name }})</small>
-                                        <br>
-                                        <span class="temp__o-value">{{ external_temperature }} °C</span>
-                                    </div>
-                                    <div class="temp__outdoors-col">
-                                        <small class="temp__heading">Heizkessel</small>
-                                        <br>
-                                        <span class="temp__o-value">{{ heater_temperature }} °C</span>
-                                    </div>
+                                <div class="temp__dial-core"></div>
+                                <div class="temp__value">
+                                    <span class="temp__digit">6</span><span class="temp__digit">0</span>°
                                 </div>
                             </div>
-                            <br>
-                            <label for="minTempInput">Min. Kesseltemperatur:</label>
-                            <input type="number" id="minTempInput" value="20">
-                            <br>
-                            <label for="maxTempInput">Max. Kesseltemperatur:</label>
-                            <input type="number" id="maxTempInput" value="80">
+                            <div class="temp__outdoors">
+                                <div class="temp__outdoors-col">
+                                    <small class="temp__heading">Außen ({{ city_name }})</small>
+                                    <br>
+                                    <span class="temp__o-value">{{ external_temperature }} °C</span>
+                                </div>
+                                <div class="temp__outdoors-col">
+                                    <small class="temp__heading">Heizkessel</small>
+                                    <br>
+                                    <span class="temp__o-value">{{ heater_temperature }} °C</span>
+                                </div>
+                            </div>
                         </div>
+                        <div class="sc-diagram">
+                            <canvas id="sc-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Wetter-Menü -->
+                    <div id="sc-weather-menu">
+
+                    </div>
+
+                    <!-- Einstellungs-Menü -->
+                    <div id="sc-settings-menu">
+                        <label for="minTempInput">Min. Kesseltemperatur:</label>
+                        <input type="number" id="minTempInput" value="20">
+                        <br>
+                        <label for="maxTempInput">Max. Kesseltemperatur:</label>
+                        <input type="number" id="maxTempInput" value="80">
                     </div>
                 </div>
 

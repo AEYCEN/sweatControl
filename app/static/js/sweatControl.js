@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById('sc-chart');
     const ctx = canvas.getContext('2d');
     const data = {
-        x: [20,19,18,17,16,15,14,13,12,11,10,8,6,4,2,0,-2,-4,-6,-8,-10,-12,-14,-16,-18,-20], // Außentemperatur
-        y: [20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80], // Kesseltemperatur
+        x: [20,18,16,14,12,10,8,6,4,2,0,-2,-4,-6,-8,-10,-12,-14,-16,-18,-20], // Außentemperatur
+        y: [], // Kesseltemperatur
     };
 
     const chartConfig = {
@@ -37,18 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     };
-
     const temperatureChart = new Chart(ctx, chartConfig);
-
-    function generateYValues(min, max) {
-        const newYValues = [];
-        for (let i = 0; i <= max; i += 2) {
-            if (i >= min) {
-                newYValues.push(i);
-            }
-        }
-        return newYValues;
-    }
 
     function fetchPredictedValues() {
         fetch('http://127.0.0.1:5000/test', {
@@ -64,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updateChart(newYValues) {
-        const newData = {
+        temperatureChart.data = {
             labels: data.x,
             datasets: [{
                 label: 'Kesseltemperatur',
@@ -75,8 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 tension: 0.4,
             }],
         };
-
-        temperatureChart.data = newData;
         temperatureChart.update();
     }
 
