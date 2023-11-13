@@ -7,7 +7,7 @@ class NeuThermostat {
 		this.el = document.querySelector(el);
 		this.temp = roomTemp // room_temperature
 		this.tempMin = 15;
-		this.tempMax = 50;
+		this.tempMax = 35;
 		this.angleMin = 15;
 		this.angleMax = 345;
 		this.outside = externalTemp; // external_temperature
