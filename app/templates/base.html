@@ -22,10 +22,13 @@
         let roomTemp = {{ room_temperature }};
         let heaterTemp = {{ heater_temperature }};
         let heaterVariant = {{ heater_variant }};
+        const savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
+        const savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
     </script>
     <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js"></script>
     <script type="text/javascript" src="../static/js/tempSlider.js"></script>
+    <script type="text/javascript" src="../static/js/settings.js"></script>
 </head>
 <body>
 <nav>
@@ -360,7 +363,7 @@
             </div>
             <div class="coming-soon-tab">
                 <div class="sc-general-container">
-                    <!-- ================ SweatControl ================ -->
+                    <!--============================ SweatControl App ============================-->
                     <div class="sc-head">
                         <div class="sc-nav-img">
                             <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="140px">
@@ -412,7 +415,7 @@
                                 </div>
                                 <div class="temp__extraInfo">
                                     <small class="temp__headingLocation"><img src="./static/img/icons/pin.png" width="12"> {{ city_name }}</small>
-                                    <small class="temp__headingLocation"><img src="./static/img/icons/heater.png" width="13"> {{ heater_variant }}</small>
+                                    <small class="temp__headingLocation"><img src="./static/img/icons/heater.png" width="13"> <span id="heaterVariantName"></span></small>
                                 </div>
                                 <h4 class="sc-title">Heizkurve</h4>
                                 <div class="sc-chart-container">
@@ -431,7 +434,7 @@
                     <div id="sc-settings-menu">
                         <div class="sc-card sc-settings-card">
                             <h4 class="sc-title" style="margin: 0;">Einstellungen</h4>
-                            <p class="sc-subtitle">Kesseltemperatur</p>
+                            <p class="sc-subtitle">Heizkessel-Temperatur</p>
                             <div class="sc-input-column-row">
                                 <div class="sc-input-column">
                                     <label for="minTempInput">Minimal möglich (°C)</label>
@@ -451,19 +454,30 @@
                                 <div class="sc-input-column">
                                     <label for="heaterVariantInput">Heizungsart</label>
                                     <select id="heaterVariantInput">
-                                        <option disabled selected>- Typ auswählen -</option>
-                                        <option value="BHKW">BHKW</option>
-                                        <option value="Brennstoffzelle">Brennstoffzelle</option>
-                                        <option value="Fernwärme">Fernwärme</option>
-                                        <option value="Gasheizung">Gasheizung</option>
-                                        <option value="Ölheizung">Ölheizung</option>
-                                        <option value="Pelletheizung">Pelletheizung</option>
-                                        <option value="Solarthermie">Solarthermie</option>
-                                        <option value="Wärmepumpe">Wärmepumpe</option>
+                                        <option value="0" disabled selected>- Typ auswählen -</option>
+                                        <option value="1">BHKW</option>
+                                        <option value="2">Brennstoffzelle</option>
+                                        <option value="3">Fernwärme</option>
+                                        <option value="4">Gasheizung</option>
+                                        <option value="5">Ölheizung</option>
+                                        <option value="6">Pelletheizung</option>
+                                        <option value="7">Solarthermie</option>
+                                        <option value="8">Wärmepumpe</option>
                                     </select>
                                 </div>
                             </div>
-                            <button class="sc-submit-button" onclick="">
+                            <p class="sc-subtitle">Raumtemperatur-Einstellbereich</p>
+                            <div class="sc-input-column-row">
+                                <div class="sc-input-column">
+                                    <label for="minRoomTempInput">Minimal möglich (°C)</label>
+                                    <input type="number" id="minRoomTempInput" value="15">
+                                </div>
+                                <div class="sc-input-column">
+                                    <label for="maxRoomTempInput">Maximal möglich (°C)</label>
+                                    <input type="number" id="maxRoomTempInput" value="35">
+                                </div>
+                            </div>
+                            <button class="sc-submit-button" onclick="updateSettings()">
                                 <span>Änderungen übernehmen</span>
                             </button>
                         <div>

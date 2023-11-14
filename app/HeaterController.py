@@ -13,7 +13,7 @@ class HeaterController:
     room_temperature = 25
     min_heater_temperature = 30
     max_heater_temperature = 80
-    heater_variant = 'Gasheizung'
+    heater_variant = 4  # Liste der Varianten im Select der Einstellungen definiert (0 bis 8)
 
     def __init__(self):
         city_name = get_current_city()
