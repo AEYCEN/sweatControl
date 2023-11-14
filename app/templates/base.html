@@ -21,6 +21,7 @@
         let externalTemp = {{ external_temperature }};
         let roomTemp = {{ room_temperature }};
         let heaterTemp = {{ heater_temperature }};
+        let heaterVariant = {{ heater_variant }};
     </script>
     <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js"></script>
@@ -451,14 +452,14 @@
                                     <label for="heaterVariantInput">Heizungsart</label>
                                     <select id="heaterVariantInput">
                                         <option disabled selected>- Typ auswählen -</option>
-                                        <option>BHKW</option>
-                                        <option>Brennstoffzelle</option>
-                                        <option>Fernwärme</option>
-                                        <option>Gasheizung</option>
-                                        <option>Ölheizung</option>
-                                        <option>Pelletheizung</option>
-                                        <option>Solarthermie</option>
-                                        <option>Wärmepumpe</option>
+                                        <option value="BHKW">BHKW</option>
+                                        <option value="Brennstoffzelle">Brennstoffzelle</option>
+                                        <option value="Fernwärme">Fernwärme</option>
+                                        <option value="Gasheizung">Gasheizung</option>
+                                        <option value="Ölheizung">Ölheizung</option>
+                                        <option value="Pelletheizung">Pelletheizung</option>
+                                        <option value="Solarthermie">Solarthermie</option>
+                                        <option value="Wärmepumpe">Wärmepumpe</option>
                                     </select>
                                 </div>
                             </div>
