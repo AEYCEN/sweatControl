@@ -7,6 +7,7 @@ from app.HeaterController import HeaterController, get_current_city
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True, template_folder='templates', static_folder='static')
+    version = '0.1-alpha'
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -38,6 +39,7 @@ def create_app(test_config=None):
         city_name = get_current_city()
         heater_variant = heater_controller.get_heater_variant()
         return render_template('base.html',
+                               app_version=version,
                                external_temperature=external_temperature,
                                heater_temperature=heater_temperature,
                                room_temperature=room_temperature,

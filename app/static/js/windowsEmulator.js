@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", openSweatControl);
 
 function openSweatControl() {
     windowsTab.style.display = "grid";
-    let appName = 'SweatControl';
+    let appName = 'SweatControl [v'+appVersion+']';
     tabImage.src = "../static/img/sweatControl-small.png";
     tabImage.style.display = "none";
     scGeneralContainer.style.display = "grid";
