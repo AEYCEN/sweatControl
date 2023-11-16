@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="../static/img/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="../static/img/icons/favicon.ico">
     <title>SweatControl</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/windowsEmulator.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sweatControl.css') }}">
@@ -14,7 +14,22 @@
 
     <script type="text/javascript" src="../static/js/windowsEmulator.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="text/javascript" src="../static/js/sweatControl.js" defer></script>
+    <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+    <script src="https://unpkg.com/gsap@3/dist/Draggable.min.js"></script>
+
+    <script>
+        const appVersion = '{{ app_version }}';
+        let externalTemp = {{ external_temperature }};
+        let roomTemp = {{ room_temperature }};
+        let heaterTemp = {{ heater_temperature }};
+        let heaterVariant = {{ heater_variant }};
+        const savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
+        const savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
+    </script>
+    <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
+    <script type="text/javascript" src="../static/js/sweatControl.js"></script>
+    <script type="text/javascript" src="../static/js/tempSlider.js"></script>
+    <script type="text/javascript" src="../static/js/settings.js"></script>
 </head>
 <body>
 <nav>
@@ -286,10 +301,13 @@
         <div class="coming-soon-widget">ToDo's schreibt man sich auf nen Zettel und nutzt nicht solche Apps</div>
     </div>
 </section>
-<section id="notification-section">
+<section id="systemInfo-section">
     <p>WLAN: BK-Uerdingen</p>
     <p>Lautstärke: 56%</p>
     <p id="accuInline"></p>
+</section>
+<section id="notification-section">
+    <p>Keine Nachrichten</p>
 </section>
 <div class="extra">
     <section id="not-mobile-friendly">
@@ -316,7 +334,7 @@
     <section id="spegni-section" class="">
         <img class="spegni-gif" src="../static/gif/shutdown.gif">
     </section>
-    <div class="windows-tab" style="left: 1290px; top: 22px; display: grid; height: 897px; width: 616px;">
+    <div id="scrollElement" class="windows-tab">
         <div class="tab-content">
             <div class="topnavbar-tab">
                 <div class="nome-tab">coming soon...</div>
@@ -346,26 +364,124 @@
             </div>
             <div class="coming-soon-tab">
                 <div class="sc-general-container">
-                    <!-- SweatControl Inhalt -->
-                    <div class="nav">
-                        <button class="sc-settings-button">
-                            <span>Einstellungen</span>
-                        </button>
-                    </div>
-                    <div class="sc-diagram">
-                        <canvas id="sc-chart"></canvas>
-                        <div class="sc-chart-inputs">
-                            <label for="minTempInput">Min. Kesseltemperatur:</label>
-                            <input type="number" id="minTempInput" value="20">
-                            <br>
-                            <label for="maxTempInput">Max. Kesseltemperatur:</label>
-                            <input type="number" id="maxTempInput" value="80">
+                    <!--============================ SweatControl App ============================-->
+                    <div class="sc-head">
+                        <div class="sc-nav-img">
+                            <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="140px">
+                        </div>
+                        <div class="sc-nav">
+                            <button id="sc-nav-button-controls" class="sc-nav-button sc-button-active" onclick="activateMenu('sc-controls-menu')">
+                                <img src="./static/img/icons/controls.png" width="20">
+                                <span>Steuerung</span>
+                            </button>
+                            <button id="sc-nav-button-weather" class="sc-nav-button" onclick="activateMenu('sc-weather-menu')">
+                                <img src="./static/img/icons/weather.png" width="21">
+                                <span>Wetter</span>
+                            </button>
+                            <button id="sc-nav-button-settings" class="sc-nav-button" onclick="activateMenu('sc-settings-menu')">
+                                <img src="./static/img/icons/settings.png" width="20">
+                                <span>Settings</span>
+                            </button>
                         </div>
                     </div>
-                    <div class="sc-information">
-                        <p>Außentemperatur in {{ city_name }}: <span id="heaterTemperature">{{ external_temperature }}</span> °C</p>
-                        <p>Heizkessel-Temperatur: {{ heater_temperature }} °C</p>
-                        <p>Angepeilte Raumtemperatur: {{ room_temperature }} °C</p>
+
+                    <!-- Steuerungs-Menü -->
+                    <div id="sc-controls-menu" style="display: grid;">
+                        <div class="sc-card">
+                            <h4 class="sc-title">Raumtemperatur</h4>
+                            <div class="temp">
+                                <div class="temp__dial">
+                                    <div class="temp__drag"></div>
+                                    <div class="temp__dial-shades">
+                                        <div class="temp__shade-cold"></div>
+                                        <div class="temp__shade-hot"></div>
+                                    </div>
+                                    <div class="temp__dial-core"></div>
+                                    <div class="temp__value">
+                                        <span class="temp__digit">2</span><span class="temp__digit">5</span>°
+                                    </div>
+                                </div>
+                                <div class="temp__outdoors">
+                                    <div class="temp__outdoors-col">
+                                        <small class="temp__heading">Außen</small>
+                                        <br>
+                                        <span class="temp__o-value">{{ external_temperature }} °C</span>
+                                    </div>
+                                    <br>
+                                    <div class="temp__outdoors-col">
+                                        <small class="temp__heading">Heizkessel</small>
+                                        <br>
+                                        <span class="temp__o-value">{{ heater_temperature }} °C</span>
+                                    </div>
+                                </div>
+                                <div class="temp__extraInfo">
+                                    <small class="temp__headingLocation"><img src="./static/img/icons/pin.png" width="12"> {{ city_name }}</small>
+                                    <small class="temp__headingLocation"><img src="./static/img/icons/heater.png" width="13"> <span id="heaterVariantName"></span></small>
+                                </div>
+                                <h4 class="sc-title">Heizkurve</h4>
+                                <div class="sc-chart-container">
+                                    <canvas id="sc-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Wetter-Menü -->
+                    <div id="sc-weather-menu">
+                        <p style="text-align: center">Coming Soon...</p>
+                    </div>
+
+                    <!-- Einstellungs-Menü -->
+                    <div id="sc-settings-menu">
+                        <div class="sc-card sc-settings-card">
+                            <h4 class="sc-title" style="margin: 0;">Einstellungen</h4>
+                            <p class="sc-subtitle">Heizkessel-Temperatur</p>
+                            <div class="sc-input-column-row">
+                                <div class="sc-input-column">
+                                    <label for="minTempInput">Minimal möglich (°C)</label>
+                                    <input type="number" id="minTempInput" value="20">
+                                </div>
+                                <div class="sc-input-column">
+                                    <label for="maxTempInput">Maximal möglich (°C)</label>
+                                    <input type="number" id="maxTempInput" value="80">
+                                </div>
+                            </div>
+                            <p class="sc-subtitle">Mein Zuhause</p>
+                            <div class="sc-input-column-row">
+                                <div class="sc-input-column">
+                                    <label for="cityInput">Stadt oder PLZ</label>
+                                    <input type="text" id="cityInput" value="{{ city_name }}">
+                                </div>
+                                <div class="sc-input-column">
+                                    <label for="heaterVariantInput">Heizungsart</label>
+                                    <select id="heaterVariantInput">
+                                        <option value="0" disabled selected>- Typ auswählen -</option>
+                                        <option value="1">BHKW</option>
+                                        <option value="2">Brennstoffzelle</option>
+                                        <option value="3">Fernwärme</option>
+                                        <option value="4">Gasheizung</option>
+                                        <option value="5">Ölheizung</option>
+                                        <option value="6">Pelletheizung</option>
+                                        <option value="7">Solarthermie</option>
+                                        <option value="8">Wärmepumpe</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p class="sc-subtitle">Raumtemperatur-Einstellbereich</p>
+                            <div class="sc-input-column-row">
+                                <div class="sc-input-column">
+                                    <label for="minRoomTempInput">Minimal möglich (°C)</label>
+                                    <input type="number" id="minRoomTempInput" value="15">
+                                </div>
+                                <div class="sc-input-column">
+                                    <label for="maxRoomTempInput">Maximal möglich (°C)</label>
+                                    <input type="number" id="maxRoomTempInput" value="35">
+                                </div>
+                            </div>
+                            <button class="sc-submit-button" onclick="updateSettings()">
+                                <span>Änderungen übernehmen</span>
+                            </button>
+                        <div>
                     </div>
                 </div>
 
