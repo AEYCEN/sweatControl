@@ -1,9 +1,10 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const heaterTempElement = document.getElementById('heaterTemperature');
+let temperatureChart;
+let data;
 
+document.addEventListener("DOMContentLoaded", function () {
     const canvas = document.getElementById('sc-chart');
     const ctx = canvas.getContext('2d');
-    const data = {
+    data = {
         x: [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0, -2, -4, -6, -8, -10, -12, -14, -16, -18, -20], // Außentemperatur
         y: [], // Kesseltemperatur
     };
@@ -57,36 +58,36 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     };
-    const temperatureChart = new Chart(ctx, chartConfig);
-
-    function fetchPredictedValues() {
-        fetch('http://127.0.0.1:5000/test', {
-            method: 'POST',
-        })
-            .then(response => response.json())
-            .then(values => {
-                updateChart(values)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-    }
-
-    function updateChart(newYValues) {
-        temperatureChart.data = {
-            labels: data.x,
-            datasets: [{
-                label: 'Kesseltemperatur',
-                data: newYValues,
-                borderColor: '#d37147',
-                borderWidth: 2,
-                fill: true,
-                tension: 0.4,
-            }],
-        };
-        temperatureChart.update();
-    }
+    temperatureChart = new Chart(ctx, chartConfig);
 
     // Call the function to fetch predicted values after the chart setup
     fetchPredictedValues();
 });
+
+function fetchPredictedValues() {
+    fetch('http://127.0.0.1:5000/test', {
+        method: 'POST',
+    })
+        .then(response => response.json())
+        .then(values => {
+            updateChart(values)
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
+
+function updateChart(newYValues) {
+    temperatureChart.data = {
+        labels: data.x,
+        datasets: [{
+            label: 'Kesseltemperatur',
+            data: newYValues,
+            borderColor: '#d37147',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.4,
+        }],
+    };
+    temperatureChart.update();
+}
