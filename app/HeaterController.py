@@ -5,7 +5,7 @@ from app.OpenWeatherAPI import OpenWeatherAPI
 
 def get_current_city():
     location = geocoder.ip('me')
-    latlon = location.latlng
+    coordinates = location.latlng
     return location.city
 
 
