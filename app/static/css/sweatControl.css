@@ -87,6 +87,10 @@
     background-color: #da7162;
 }
 
+.sc-submit-button:active {
+    background-color: #c2594a;
+}
+
 .sc-head {
     position: relative;
 }
@@ -156,6 +160,10 @@
 }
 
 .sc-nav-button:hover {
+    opacity: 0.75;
+}
+
+.sc-nav-button:active {
     opacity: 1;
 }
 
@@ -446,4 +454,12 @@
     position: relative;
     border-radius: 1em;
     padding: 0.1% 2% 1.5% 2.5%;
+}
+
+.buttonSuccess {
+    background-color: #67a43c !important;
+}
+
+.buttonError {
+    background-color: #e14031 !important;
 }

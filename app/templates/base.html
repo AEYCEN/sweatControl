@@ -23,10 +23,11 @@
         let roomTemp = {{ room_temperature }};
         let heaterTemp = {{ heater_temperature }};
         let heaterVariant = {{ heater_variant }};
-        const savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
-        const savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
-        const savedMinTemp = parseInt(localStorage.getItem("minTemp"));
-        const savedMaxTemp = parseInt(localStorage.getItem("maxTemp"));
+        let savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
+        let savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
+        let savedMinTemp = parseInt(localStorage.getItem("minTemp"));
+        let savedMaxTemp = parseInt(localStorage.getItem("maxTemp"));
+        let savedHeaterVariant = parseInt(localStorage.getItem("heaterVariant"));
     </script>
     <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js"></script>
@@ -480,13 +481,13 @@
                                     <input type="number" id="maxRoomTempInput" value="35">
                                 </div>
                             </div>
-                            <button class="sc-submit-button" onclick="updateSettings()">
+                            <button class="sc-submit-button" id="settingsSubmit" onclick="updateSettings()">
                                 <span>Änderungen übernehmen</span>
                             </button>
                         <div>
+
                     </div>
                 </div>
-
                 <img id="tab-image" src="" alt="">
             </div>
         </div>
