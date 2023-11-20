@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const minTempInput = document.getElementById('minTempInput');
-    const maxTempInput = document.getElementById('maxTempInput');
     const heaterTempElement = document.getElementById('heaterTemperature');
 
     const canvas = document.getElementById('sc-chart');
