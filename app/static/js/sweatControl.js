@@ -1,7 +1,12 @@
 let temperatureChart;
 let data;
+let externalTempElement;
+let heaterTempElement;
 
 document.addEventListener("DOMContentLoaded", function () {
+    externalTempElement = document.getElementById('externalTempDisplay');
+    heaterTempElement = document.getElementById('heaterTempDisplay');
+
     const canvas = document.getElementById('sc-chart');
     const ctx = canvas.getContext('2d');
     data = {
@@ -90,4 +95,9 @@ function updateChart(newYValues) {
         }],
     };
     temperatureChart.update();
+}
+
+function updateExternalAndHeaterTemp(newExternalTemp, newHeaterTemp) {
+    externalTempElement.innerText = newExternalTemp;
+    heaterTempElement.innerText = newHeaterTemp;
 }
