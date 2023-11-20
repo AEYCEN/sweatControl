@@ -89,45 +89,60 @@ class NeuThermostat {
                 activeState = `${dragClass}--active`,
                 tempDrag = this.el.querySelector(`.${dragClass}`);
 
-            if (tempDrag) {
-                if (shouldAdd === true)
-                    tempDrag.classList.add(activeState);
-                else
-                    tempDrag.classList.remove(activeState);
-            }
-        }
-    }
-
-    removeClass(el, classname) {
-        el.classList.remove(classname);
-    }
-
-    changeDigit(el, digit) {
-        el.textContent = digit;
-    }
-
-    tempAdjust(inputVal = 0) {
-        /*
-        inputVal can be the temp as an integer, "u" for up,
-        "d" for down, or "drag" for dragged value
-        */
-        if (this.el) {
-            let cs = window.getComputedStyle(this.el),
-                tempDigitEls = this.el.querySelectorAll(".temp__digit"),
-                tempDigits = tempDigitEls ? Array.from(tempDigitEls).reverse() : [],
-                tempDrag = this.el.querySelector(".temp__drag"),
-                cold = this.el.querySelector(".temp__shade-cold"),
-                hot = this.el.querySelector(".temp__shade-hot"),
-                prevTemp = Math.round(this.temp),
-                tempRange = this.tempMax - this.tempMin,
-                angleRange = this.angleMax - this.angleMin,
-                notDragged = inputVal != "drag";
+			if (tempDrag) {
+				if (shouldAdd === true)
+					tempDrag.classList.add(activeState);
+				else
+					tempDrag.classList.remove(activeState);
+			}
+		}
+	}
+	removeClass(el,classname) {
+		el.classList.remove(classname);
+	}
+	changeDigit(el,digit) {
+		el.textContent = digit;
+	}
+	updateRoom(temp) {
+	  fetch('http://127.0.0.1:5000/update_temperature_room', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            roomTemp: temp
+        })
+    })
+      .then(response => response.json())
+    .then(data => {
+        console.log('Response from server:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+	}
+	tempAdjust(inputVal = 0) {
+		/*
+		inputVal can be the temp as an integer, "u" for up, 
+		"d" for down, or "drag" for dragged value
+		*/
+		if (this.el) {
+			let cs = window.getComputedStyle(this.el),
+				tempDigitEls = this.el.querySelectorAll(".temp__digit"),
+				tempDigits = tempDigitEls ? Array.from(tempDigitEls).reverse() : [],
+				tempDrag = this.el.querySelector(".temp__drag"),
+				cold = this.el.querySelector(".temp__shade-cold"),
+				hot = this.el.querySelector(".temp__shade-hot"),
+				prevTemp = Math.round(this.temp),
+				tempRange = this.tempMax - this.tempMin,
+				angleRange = this.angleMax - this.angleMin,
+				notDragged = inputVal != "drag";
 
             // input is an integer
             if (!isNaN(inputVal)) {
                 this.temp = inputVal;
 
-                // input is a given direction
+            // input is a given direction
             } else if (inputVal == "u") {
                 if (this.temp < this.tempMax)
                     ++this.temp;
@@ -140,7 +155,7 @@ class NeuThermostat {
 
                 this.activeState(true);
 
-                // Draggable was used
+            // Draggable was used
             } else if (inputVal == "drag") {
                 if (tempDrag) {
                     let tempDragCS = window.getComputedStyle(tempDrag),
@@ -169,29 +184,28 @@ class NeuThermostat {
             // CSS variable
             this.el.style.setProperty("--angle", `${angle}deg`);
 
-            // draggable area
-            if (tempDrag && notDragged)
-                tempDrag.style.transform = `rotate(${angle}deg)`;
+			// draggable area
+			if (tempDrag && notDragged)
+				tempDrag.style.transform = `rotate(${angle}deg)`;
 
-            // shades
-            if (cold)
-                cold.style.opacity = 1 - tempFrac;
-            if (hot)
-                hot.style.opacity = tempFrac;
+			// shades
+			if (cold)
+				cold.style.opacity = 1 - tempFrac;
+			if (hot)
+				hot.style.opacity = tempFrac;
 
-            // display value
-            if (tempDigits) {
-                let prevDigitArr = String(prevTemp).split("").reverse(),
-                    tempRounded = Math.round(this.temp),
-                    digitArr = String(tempRounded).split("").reverse(),
-                    maxDigits = 2,
-                    digitDiff = maxDigits - digitArr.length,
-                    prevDigitDiff = maxDigits - prevDigitArr.length,
-                    incClass = "temp__digit--inc",
-                    decClass = "temp__digit--dec",
-                    timeoutA = 150,
-                    timeoutB = 300;
-
+			// display value
+			if (tempDigits) {
+				let prevDigitArr = String(prevTemp).split("").reverse(),
+					tempRounded = Math.round(this.temp),
+					digitArr = String(tempRounded).split("").reverse(),
+					maxDigits = 2,
+					digitDiff = maxDigits - digitArr.length,
+					prevDigitDiff = maxDigits - prevDigitArr.length,
+					incClass = "temp__digit--inc",
+					decClass = "temp__digit--dec",
+					timeoutA = 150,
+					timeoutB = 300;
 
                 while (digitDiff--)
                     digitArr.push("");
@@ -199,10 +213,14 @@ class NeuThermostat {
                 while (prevDigitDiff--)
                     prevDigitArr.push("");
 
-                for (let d = 0; d < maxDigits; ++d) {
-                    let digit = +digitArr[d],
-                        prevDigit = +prevDigitArr[d],
-                        tempDigit = tempDigits[d];
+					if (tempRounded !== prevTemp) {
+                        this.updateRoom(tempRounded);
+                     }
+
+				for (let d = 0; d < maxDigits; ++d) {
+					let digit = +digitArr[d],
+						prevDigit = +prevDigitArr[d],
+						tempDigit = tempDigits[d];
 
                     setTimeout(this.changeDigit.bind(null, tempDigit, digit), timeoutA);
 
