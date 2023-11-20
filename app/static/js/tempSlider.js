@@ -1,87 +1,93 @@
-document.addEventListener("DOMContentLoaded",function(){
-	const thermostat = new NeuThermostat(".temp");
+document.addEventListener("DOMContentLoaded", function () {
+    const thermostat = new NeuThermostat(".temp", savedMinRoomTemp, savedMaxRoomTemp);
 });
 
 class NeuThermostat {
-	constructor(el) {
-		this.el = document.querySelector(el);
-		this.temp = roomTemp // room_temperature
-		this.tempMin = 15;
-		this.tempMax = 35;
-		this.angleMin = 15;
-		this.angleMax = 345;
-		this.outside = externalTemp; // external_temperature
-		this.humidity = heaterTemp // heater_temperature
-		this.init();
-	}
-	init() {
-		window.addEventListener("keydown",this.kbdEvent.bind(this));
-		window.addEventListener("keyup",this.activeState.bind(this));
+    constructor(el, savedMinRoomTemp, savedMaxRoomTemp) {
+        this.el = document.querySelector(el);
+        this.temp = roomTemp // room_temperature
+        if (savedMinRoomTemp || savedMaxRoomTemp) {
+            this.tempMin = savedMinRoomTemp;
+            this.tempMax = savedMaxRoomTemp;
+        } else {
+            this.tempMin = 15;
+            this.tempMax = 35;
+        }
+        this.angleMin = 15;
+        this.angleMax = 345;
+        this.outside = externalTemp; // external_temperature
+        this.humidity = heaterTemp // heater_temperature
+        this.init();
+    }
 
-		// hard limits
-		if (this.tempMin < 0)
-			this.tempMin = 0;
+    init() {
+        window.addEventListener("keydown", this.kbdEvent.bind(this));
+        window.addEventListener("keyup", this.activeState.bind(this));
 
-		if (this.tempMax > 99)
-			this.tempMax = 99;
+        // hard limits
+        if (this.tempMin < 0)
+            this.tempMin = 0;
 
-		if (this.angleMin < 0)
-			this.angleMin = 0;
+        if (this.tempMax > 99)
+            this.tempMax = 99;
 
-		if (this.angleMax > 360)
-			this.angleMax = 360;
+        if (this.angleMin < 0)
+            this.angleMin = 0;
 
-		// init values
-		this.tempAdjust(this.temp);
-		this.outdoorsAdjust(this.outside,this.humidity);
+        if (this.angleMax > 360)
+            this.angleMax = 360;
 
-		// init GreenSock Draggable
-		Draggable.create(".temp__drag",{
-			type: "rotation",
-			bounds: {
-				minRotation: this.angleMin, 
-				maxRotation: this.angleMax
-			},
-			onDrag: () => {
-				this.tempAdjust("drag");
-			}
-		});
-	}
-	angleFromMatrix(transVal) {
-		let matrixVal = transVal.split('(')[1].split(')')[0].split(','),
-			[cos1,sin] = matrixVal.slice(0,2),
-			angle = Math.round(Math.atan2(sin,cos1) * (180 / Math.PI)) * -1;
-		
-		// convert negative angles to positive
-		if (angle < 0)
-			angle += 360;
-		
-		if (angle > 0)
-			angle = 360 - angle;
-		
-		return angle;
-	}
-	randInt(min,max) {
-		return Math.round(Math.random() * (max - min)) + min;
-	}
-	kbdEvent(e) {
-		let kc = e.keyCode;
+        // init values
+        this.tempAdjust(this.temp);
+        this.outdoorsAdjust(this.outside, this.humidity);
 
-		if (kc) {
-			// up or right
-			if (kc == 38 || kc == 39)
-				this.tempAdjust("u");
+        // init GreenSock Draggable
+        Draggable.create(".temp__drag", {
+            type: "rotation",
+            bounds: {
+                minRotation: this.angleMin,
+                maxRotation: this.angleMax
+            },
+            onDrag: () => {
+                this.tempAdjust("drag");
+            }
+        });
+    }
 
-			// left or down
-			else if (kc == 37 || kc == 40)
-				this.tempAdjust("d");
-		}
-	}
-	activeState(shouldAdd = false) {
-		if (this.el) {
-			let dragClass = "temp__drag",
-				activeState = `${dragClass}--active`,
-				tempDrag = this.el.querySelector(`.${dragClass}`);
+    angleFromMatrix(transVal) {
+        let matrixVal = transVal.split('(')[1].split(')')[0].split(','),
+            [cos1, sin] = matrixVal.slice(0, 2),
+            angle = Math.round(Math.atan2(sin, cos1) * (180 / Math.PI)) * -1;
+
+        // convert negative angles to positive
+        if (angle < 0)
+            angle += 360;
+
+        if (angle > 0)
+            angle = 360 - angle;
+
+        return angle;
+    }
+
+    kbdEvent(e) {
+        let kc = e.keyCode;
+
+        if (kc) {
+            // up or right
+            if (kc == 38 || kc == 39)
+                this.tempAdjust("u");
+
+            // left or down
+            else if (kc == 37 || kc == 40)
+                this.tempAdjust("d");
+        }
+    }
+
+    activeState(shouldAdd = false) {
+        if (this.el) {
+            let dragClass = "temp__drag",
+                activeState = `${dragClass}--active`,
+                tempDrag = this.el.querySelector(`.${dragClass}`);
 
 			if (tempDrag) {
 				if (shouldAdd === true)
@@ -96,6 +102,24 @@ class NeuThermostat {
 	}
 	changeDigit(el,digit) {
 		el.textContent = digit;
+	}
+	updateRoom(temp) {
+	  fetch('http://127.0.0.1:5000/update_temperature_room', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            roomTemp: temp
+        })
+    })
+      .then(response => response.json())
+    .then(data => {
+        console.log('Response from server:', data);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
 	}
 	tempAdjust(inputVal = 0) {
 		/*
@@ -114,51 +138,51 @@ class NeuThermostat {
 				angleRange = this.angleMax - this.angleMin,
 				notDragged = inputVal != "drag";
 
-			// input is an integer
-			if (!isNaN(inputVal)) {
-				this.temp = inputVal;
+            // input is an integer
+            if (!isNaN(inputVal)) {
+                this.temp = inputVal;
 
-			// input is a given direction
-			} else if (inputVal == "u") {
-				if (this.temp < this.tempMax)
-					++this.temp;
+            // input is a given direction
+            } else if (inputVal == "u") {
+                if (this.temp < this.tempMax)
+                    ++this.temp;
 
-				this.activeState(true);
+                this.activeState(true);
 
-			} else if (inputVal == "d") {
-				if (this.temp > this.tempMin)
-					--this.temp;
+            } else if (inputVal == "d") {
+                if (this.temp > this.tempMin)
+                    --this.temp;
 
-				this.activeState(true);
+                this.activeState(true);
 
-			// Draggable was used
-			} else if (inputVal == "drag") {
-				if (tempDrag) {
-					let tempDragCS = window.getComputedStyle(tempDrag),
-						trans = tempDragCS.getPropertyValue("transform"),		
-						dragAngle = this.angleFromMatrix(trans),
-						relAngle = dragAngle - this.angleMin,
-						angleFrac = relAngle / angleRange;
+            // Draggable was used
+            } else if (inputVal == "drag") {
+                if (tempDrag) {
+                    let tempDragCS = window.getComputedStyle(tempDrag),
+                        trans = tempDragCS.getPropertyValue("transform"),
+                        dragAngle = this.angleFromMatrix(trans),
+                        relAngle = dragAngle - this.angleMin,
+                        angleFrac = relAngle / angleRange;
 
-					this.temp = angleFrac * tempRange + this.tempMin;
-				}
-			}
+                    this.temp = angleFrac * tempRange + this.tempMin;
+                }
+            }
 
-			// keep the temperature within bounds
-			if (this.temp < this.tempMin)
-				this.temp = this.tempMin;
-			else if (this.temp > this.tempMax)
-				this.temp = this.tempMax;
+            // keep the temperature within bounds
+            if (this.temp < this.tempMin)
+                this.temp = this.tempMin;
+            else if (this.temp > this.tempMax)
+                this.temp = this.tempMax;
 
-			// use whole number temperatures for keyboard control
-			if (notDragged)
-				this.temp = Math.round(this.temp);
+            // use whole number temperatures for keyboard control
+            if (notDragged)
+                this.temp = Math.round(this.temp);
 
-			let relTemp = this.temp - this.tempMin,
-				tempFrac = relTemp / tempRange,
-				angle = tempFrac * angleRange + this.angleMin;
-			// CSS variable
-			this.el.style.setProperty("--angle",`${angle}deg`);
+            let relTemp = this.temp - this.tempMin,
+                tempFrac = relTemp / tempRange,
+                angle = tempFrac * angleRange + this.angleMin;
+            // CSS variable
+            this.el.style.setProperty("--angle", `${angle}deg`);
 
 			// draggable area
 			if (tempDrag && notDragged)
@@ -183,48 +207,52 @@ class NeuThermostat {
 					timeoutA = 150,
 					timeoutB = 300;
 
+                while (digitDiff--)
+                    digitArr.push("");
 
-				while (digitDiff--)
-					digitArr.push("");
+                while (prevDigitDiff--)
+                    prevDigitArr.push("");
 
-				while (prevDigitDiff--)
-					prevDigitArr.push("");
+                if (tempRounded !== prevTemp) {
+                    this.updateRoom(tempRounded);
+                }
 
 				for (let d = 0; d < maxDigits; ++d) {
 					let digit = +digitArr[d],
 						prevDigit = +prevDigitArr[d],
 						tempDigit = tempDigits[d];
 
-					setTimeout(this.changeDigit.bind(null,tempDigit,digit),timeoutA);
+                    setTimeout(this.changeDigit.bind(null, tempDigit, digit), timeoutA);
 
-					// animate increment
-					if ((digit === 0 && prevDigit === 9) || (digit > prevDigit && this.temp > prevTemp)) {
-						this.removeClass(tempDigit,incClass);
-						void tempDigit.offsetWidth;
-						tempDigit.classList.add(incClass);
-						setTimeout(this.removeClass.bind(null,tempDigit,incClass),timeoutB);
+                    // animate increment
+                    if ((digit === 0 && prevDigit === 9) || (digit > prevDigit && this.temp > prevTemp)) {
+                        this.removeClass(tempDigit, incClass);
+                        void tempDigit.offsetWidth;
+                        tempDigit.classList.add(incClass);
+                        setTimeout(this.removeClass.bind(null, tempDigit, incClass), timeoutB);
 
-					// animate decrement
-					} else if ((digit === 9 && prevDigit === 0) || (digit < prevDigit && this.temp < prevTemp)) {
-						this.removeClass(tempDigit,decClass);
-						void tempDigit.offsetWidth;
-						tempDigit.classList.add(decClass);
-						setTimeout(this.removeClass.bind(null,tempDigit,decClass),timeoutB);
-					}
-				}
-			}
-		}
-	}
-	outdoorsAdjust(inputOutside = 0,inputHumidity = 0) {
-		let outdoorEls = this.el.querySelectorAll(".temp__o-value"),
-			outdoorVals = outdoorEls ? Array.from(outdoorEls) : [];
+                        // animate decrement
+                    } else if ((digit === 9 && prevDigit === 0) || (digit < prevDigit && this.temp < prevTemp)) {
+                        this.removeClass(tempDigit, decClass);
+                        void tempDigit.offsetWidth;
+                        tempDigit.classList.add(decClass);
+                        setTimeout(this.removeClass.bind(null, tempDigit, decClass), timeoutB);
+                    }
+                }
+            }
+        }
+    }
 
-		this.outside = inputOutside;
-		this.humidity = inputHumidity;
+    outdoorsAdjust(inputOutside = 0, inputHumidity = 0) {
+        let outdoorEls = this.el.querySelectorAll(".temp__o-value"),
+            outdoorVals = outdoorEls ? Array.from(outdoorEls) : [];
 
-		if (outdoorVals) {
-			outdoorVals[0].textContent = `${this.outside} °C`;
-			outdoorVals[1].textContent = `${this.humidity} °C`;
-		}
-	}
+        this.outside = inputOutside;
+        this.humidity = inputHumidity;
+
+        if (outdoorVals) {
+            outdoorVals[0].textContent = `${this.outside} °C`;
+            outdoorVals[1].textContent = `${this.humidity} °C`;
+        }
+    }
 }
