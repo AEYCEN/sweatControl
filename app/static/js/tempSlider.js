@@ -213,9 +213,9 @@ class NeuThermostat {
                 while (prevDigitDiff--)
                     prevDigitArr.push("");
 
-					if (tempRounded !== prevTemp) {
-                        this.updateRoom(tempRounded);
-                     }
+                if (tempRounded !== prevTemp) {
+                    this.updateRoom(tempRounded);
+                }
 
 				for (let d = 0; d < maxDigits; ++d) {
 					let digit = +digitArr[d],

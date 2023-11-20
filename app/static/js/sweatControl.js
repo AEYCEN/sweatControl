@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const updateTemperaturesButton = document.getElementById('updateTemperaturesButton');
     const heaterTempElement = document.getElementById('heaterTemperature');
 
     const canvas = document.getElementById('sc-chart');
