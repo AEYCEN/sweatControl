@@ -54,14 +54,16 @@ Then install all the required plugins:
 
 ℹ️ If you want to stop the running environment after using the application, just type `deactivate` while the CLI will display `(venv)` in front of your user input.
 
-### OpenWeather API key
+### WeatherAPI.com API key
 
-An [OpenWeather 2.5 API key](https://home.openweathermap.org/users/sign_up) is required to run the application. 
-Create a file `open_weather.py` with the following template and insert your API key:
+An [WeatherAPI.com API key](https://www.weatherapi.com/my/fields.aspx) is required to run the application. 
+Create a file `weather_api.py` with the following template and insert your API key:
 
     API_KEY = "<YourApiKey>"
 
-Finally, create in the root directory a folder with the name `secret` and put the created file `open_weather.py` in it.
+Finally, create in the root directory a folder with the name `secret` and put the created file `weather_api.py` in it.
+
+Alternatively to creating the file you can create a local environment variable with the name `WEATHER_API_KEY` which holds the API key.
 
 ## 🛠️ Usage
 
