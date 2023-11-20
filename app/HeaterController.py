@@ -41,10 +41,15 @@ class HeaterController:
         x = [-20, -18, -16, -14, -12, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
         predicted_values = []
 
+        heater_temperature = self.min_heater_temperature
+
+        if heater_temperature < self.room_temperature:
+            heater_temperature = self.room_temperature
+
         for temperature_aussen in x:
             predicted_temperature = self.model.predict_heater_temperature(temperature_aussen,
                                                                           self.get_room_temperature(),
-                                                                          self.min_heater_temperature,
+                                                                          heater_temperature,
                                                                           self.max_heater_temperature)
             predicted_values.append(predicted_temperature)
 
