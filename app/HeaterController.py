@@ -1,12 +1,15 @@
 import geocoder
 from app.HeaterModel import HeaterModel
+from app.WeatherApi import WeatherAPI
 from app.OpenWeatherAPI import OpenWeatherAPI
 
 
 def get_current_city():
     location = geocoder.ip('me')
     coordinates = location.latlng
-    return location.city
+    city_name = location.city
+    return city_name
+    return coordinates
 
 
 class HeaterController:
@@ -17,8 +20,8 @@ class HeaterController:
     heater_variant = 4  # Liste der Varianten im Select der Einstellungen definiert (0 bis 8)
 
     def __init__(self):
-        city_name = get_current_city()
-        self.api = OpenWeatherAPI(city_name)
+        city_coordinates = get_current_city()
+        self.api = OpenWeatherAPI(city_coordinates)
         self.model = HeaterModel()
 
     def get_external_temperature(self):
