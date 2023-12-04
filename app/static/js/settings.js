@@ -63,34 +63,6 @@ function updateSettings() {
     savedMaxTemp = parseInt(localStorage.getItem("maxTemp"), 10);
     savedHeaterVariant = parseInt(localStorage.getItem("heaterVariant"), 10);
 
-    // Heizungstyp ändern
-    const heaterVariantElement = document.querySelector('#heaterVariantInput');
-    const heaterVariant = parseInt(heaterVariantElement.value, 10);
-
-    if (heaterVariant !== savedHeaterVariant) {
-        localStorage.setItem("heaterVariant", heaterVariantElement.value);
-        heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText
-
-        fetch('http://127.0.0.1:5000/update_temperatures_boiler', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                heaterVariant: heaterVariant
-            })
-        })
-            .then(response => response.json())
-            .then(values => {
-                fetchPredictedValues()
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        changedSettings = true;
-    }
-
     // Raumtemperatur-Einstellbereich
     const minRoomTemp = parseInt(minRoomTempElement.value, 10);
     const maxRoomTemp = parseInt(maxRoomTempElement.value, 10);
@@ -103,13 +75,17 @@ function updateSettings() {
         changedSettings = true;
     }
 
-    // Kesseltemperatur-Einstellbereich
+    // Kesseltemperatur-Einstellbereich und Heizungstyp ändern
     const minTemp = parseInt(minTempElement.value, 10);
     const maxTemp = parseInt(maxTempElement.value, 10);
+    const heaterVariantElement = document.querySelector('#heaterVariantInput');
+    const heaterVariant = parseInt(heaterVariantElement.value, 10);
 
-    if (minTemp !== savedMinTemp || maxTemp !== savedMaxTemp) {
+    if (minTemp !== savedMinTemp || maxTemp !== savedMaxTemp || heaterVariant !== savedHeaterVariant) {
         localStorage.setItem("minTemp", minTempElement.value);
         localStorage.setItem("maxTemp", maxTempElement.value);
+        localStorage.setItem("heaterVariant", heaterVariantElement.value);
+        heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText
 
         fetch('http://127.0.0.1:5000/update_temperatures_boiler', {
             method: 'POST',
@@ -118,12 +94,14 @@ function updateSettings() {
             },
             body: JSON.stringify({
                 minTemperature: minTemp,
-                maxTemperature: maxTemp
+                maxTemperature: maxTemp,
+                heaterVariant: heaterVariant
             })
         })
         .then(response => response.json())
         .then(values => {
             fetchPredictedValues()
+            console.log(values);
         })
         .catch((error) => {
             console.error('Error:', error);

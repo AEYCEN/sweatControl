@@ -115,7 +115,6 @@ class NeuThermostat {
     })
       .then(response => response.json())
     .then(data => {
-        console.log('Response from server:', data);
         fetchPredictedValues();
     })
     .catch((error) => {

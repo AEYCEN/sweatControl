@@ -3,7 +3,7 @@ import sys
 
 
 from flask import Flask, render_template, jsonify, request
-from app.HeaterController import HeaterController, get_current_city
+from app.HeaterController import HeaterController, get_current_city_name
 
 
 def create_app(test_config=None):
@@ -32,8 +32,6 @@ def create_app(test_config=None):
     if heater_controller.get_external_temperature() is None:
         sys.exit(1)
 
-
-
     @app.route('/update_temperature_room', methods=['POST'])
     def update_temperature_room():
         try:
@@ -52,21 +50,23 @@ def create_app(test_config=None):
             data = request.json
             min_temp = data['minTemperature']
             max_temp = data['maxTemperature']
+            new_variant = data['heaterVariant']
 
             # Update the heater controller with new temperatures
+            heater_controller.heater_variant = int(new_variant)
             heater_controller.min_heater_temperature = int(min_temp)
             heater_controller.max_heater_temperature = int(max_temp)
 
-            return jsonify({'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp})
+            return jsonify({'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp, 'variant': new_variant})
         except Exception as e:
             return jsonify({'status': 'error', 'message': str(e)})
 
     @app.route('/')
     def index():
-        external_temperature = round(heater_controller.get_external_temperature(),1)
-        heater_temperature = round(heater_controller.get_heater_temperature(), 1)
+        external_temperature = heater_controller.get_external_temperature()
+        heater_temperature = heater_controller.get_heater_temperature()
         room_temperature = heater_controller.get_wanted_room_temperature()
-        city_name = get_current_city()
+        city_name = get_current_city_name()
         heater_variant = heater_controller.get_heater_variant()
         return render_template('base.html',
                                app_version=version,
@@ -78,8 +78,10 @@ def create_app(test_config=None):
 
     @app.route('/test', methods=['POST'])
     def test():
-        data = heater_controller.get_data_diagram()
-        # Return the data as a JSON response
+        data = {"chartValues": heater_controller.get_data_diagram(),
+                "externalTemp": heater_controller.get_external_temperature(),
+                "heaterTemp": heater_controller.get_heater_temperature()}
+
         return jsonify(data)
 
     return app

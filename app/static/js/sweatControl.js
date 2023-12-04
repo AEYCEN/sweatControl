@@ -75,7 +75,9 @@ function fetchPredictedValues() {
     })
         .then(response => response.json())
         .then(values => {
-            updateChart(values)
+        console.log(values);
+            updateChart(values['chartValues'])
+            updateExternalAndHeaterTemp(values['externalTemp'], values['heaterTemp'])
         })
         .catch((error) => {
             console.error('Error:', error);

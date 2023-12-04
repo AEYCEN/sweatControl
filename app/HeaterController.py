@@ -1,15 +1,19 @@
 import geocoder
 from app.HeaterModel import HeaterModel
 from app.WeatherApi import WeatherAPI
-from app.OpenWeatherAPI import OpenWeatherAPI
 
 
-def get_current_city():
+
+def get_current_city_name():
     location = geocoder.ip('me')
-    coordinates = location.latlng
     city_name = location.city
     return city_name
-    return coordinates
+
+
+def get_current_city_coordinates():
+    location = geocoder.ip('me')
+    city_coordinates = location.latlng
+    return city_coordinates
 
 
 class HeaterController:
@@ -20,19 +24,18 @@ class HeaterController:
     heater_variant = 4  # Liste der Varianten im Select der Einstellungen definiert (0 bis 8)
 
     def __init__(self):
-        city_coordinates = get_current_city()
-        self.api = OpenWeatherAPI(city_coordinates)
+        self.api = WeatherAPI(get_current_city_coordinates())
         self.model = HeaterModel()
 
     def get_external_temperature(self):
-        return self.api.get_external_temperature()
+        return round(self.api.get_external_temperature(self.heater_variant), 1)
 
     def get_room_temperature(self):
         return self.room_temperature
 
     def get_heater_temperature(self):
-        return self.model.predict_heater_temperature(self.get_external_temperature(), self.get_room_temperature(),
-                                                     self.min_heater_temperature, self.max_heater_temperature)
+        return round(self.model.predict_heater_temperature(self.get_external_temperature(), self.get_room_temperature(),
+                                                           self.min_heater_temperature, self.max_heater_temperature), 1)
 
     def update_room_temperature(self, new_temperature):
         self.room_temperature = new_temperature
@@ -61,7 +64,7 @@ class HeaterController:
 if __name__ == "__main__":
     controller = HeaterController()
     temperature = controller.get_external_temperature()
-    city = get_current_city()
+    city = get_current_city_name()
     if temperature:
         print(f"{city} - {temperature}°C")
     else:
