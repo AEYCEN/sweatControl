@@ -1,19 +1,40 @@
 import geocoder
+import pgeocode
+import pandas as pd
 from app.HeaterModel import HeaterModel
 from app.WeatherApi import WeatherAPI
 
+DEFAULT_POSTAL_CODE = '47906'
+def get_postal_code():
+    try:
+        location = geocoder.ip('me')
+        return location.postal if location and location.postal else DEFAULT_POSTAL_CODE
+    except:
+        return DEFAULT_POSTAL_CODE
 
 
 def get_current_city_name():
-    location = geocoder.ip('me')
-    city_name = location.city
-    return city_name
+    nomi = pgeocode.Nominatim('de')
+    for postal_code in [DEFAULT_POSTAL_CODE, get_postal_code()]:
+        info = nomi.query_postal_code(postal_code)
+        if not info.empty:
+            place_name = info['place_name']
+            if isinstance(place_name, pd.Series):
+                if place_name.notna().all():
+                    return place_name.iloc[0]
+            elif isinstance(place_name, str):
+                return place_name
+    return "City name could not be determined."
 
 
 def get_current_city_coordinates():
-    location = geocoder.ip('me')
-    city_coordinates = location.latlng
-    return city_coordinates
+    nomi = pgeocode.Nominatim('de')
+    for postal_code in [DEFAULT_POSTAL_CODE, get_postal_code()]:
+        info = nomi.query_postal_code(postal_code)
+        if not info.empty and not pd.isna(info['latitude']) and not pd.isna(info['longitude']):
+            return info['latitude'], info['longitude']
+    return None, None
+
 
 
 class HeaterController:

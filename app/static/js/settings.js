@@ -87,7 +87,7 @@ function updateSettings() {
         localStorage.setItem("heaterVariant", heaterVariantElement.value);
         heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText
 
-        fetch('/update_temperatures_boiler', {
+        fetch('/update_settings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -96,6 +96,7 @@ function updateSettings() {
                 minTemperature: minTemp,
                 maxTemperature: maxTemp,
                 heaterVariant: heaterVariant
+               // plz: 1234
             })
         })
         .then(response => response.json())

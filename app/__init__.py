@@ -2,7 +2,7 @@ import os
 import sys
 
 from flask import Flask, render_template, jsonify, request
-from app.HeaterController import HeaterController, get_current_city_name
+from app.HeaterController import HeaterController, get_current_city_name, DEFAULT_POSTAL_CODE
 
 
 def create_app(test_config=None):
@@ -52,10 +52,11 @@ def create_app(test_config=None):
 
         return jsonify(data)
 
-    @app.route('/update_temperatures_boiler', methods=['POST'])
-    def update_temperatures_boiler():
+    @app.route('/update_settings', methods=['POST'])
+    def update_settings():
         try:
             data = request.json
+            plz = data['plz']
             min_temp = data['minTemperature']
             max_temp = data['maxTemperature']
             new_variant = data['heaterVariant']
@@ -64,6 +65,7 @@ def create_app(test_config=None):
             heater_controller.heater_variant = int(new_variant)
             heater_controller.min_heater_temperature = int(min_temp)
             heater_controller.max_heater_temperature = int(max_temp)
+            DEFAULT_POSTAL_CODE = int(plz)
 
             return jsonify(
                 {'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp, 'variant': new_variant})

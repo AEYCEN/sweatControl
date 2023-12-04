@@ -8,6 +8,7 @@ RESET = '\033[0m'
 
 class WeatherAPI:
     def __init__(self, city_coordinates):
+            print(city_coordinates)
             if "API_KEY" in os.environ:
                 self.api_key = os.environ.get("API_KEY")
             else:
