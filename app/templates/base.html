@@ -23,10 +23,13 @@
         let roomTemp = {{ room_temperature }};
         let heaterTemp = {{ heater_temperature }};
         let heaterVariant = {{ heater_variant }};
-        const savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
-        const savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
-        const savedMinTemp = parseInt(localStorage.getItem("minTemp"));
-        const savedMaxTemp = parseInt(localStorage.getItem("maxTemp"));
+        let zipcode = {{ city_zip }};
+        let savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
+        let savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
+        let savedMinTemp = parseInt(localStorage.getItem("minTemp"));
+        let savedMaxTemp = parseInt(localStorage.getItem("maxTemp"));
+        let savedHeaterVariant = parseInt(localStorage.getItem("heaterVariant"));
+        let savedZip = parseInt(localStorage.getItem("zipcode"));
     </script>
     <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js"></script>
@@ -369,22 +372,17 @@
                     <!--============================ SweatControl App ============================-->
                     <div class="sc-head">
                         <div class="sc-nav-img">
-                            <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="140px">
+                            <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="155px">
                         </div>
-                        <div class="sc-nav">
-                            <button id="sc-nav-button-controls" class="sc-nav-button sc-button-active" onclick="activateMenu('sc-controls-menu')">
-                                <img src="./static/img/icons/controls.png" width="20">
-                                <span>Steuerung</span>
-                            </button>
-                            <button id="sc-nav-button-weather" class="sc-nav-button" onclick="activateMenu('sc-weather-menu')">
-                                <img src="./static/img/icons/weather.png" width="21">
-                                <span>Wetter</span>
-                            </button>
-                            <button id="sc-nav-button-settings" class="sc-nav-button" onclick="activateMenu('sc-settings-menu')">
+                        <button class="sc-nav-button" onclick="toggleMenu()" id="sc-nav-button-settings">
+                            <div class="sign" id="sc-settingstogglesign1">
                                 <img src="./static/img/icons/settings.png" width="20">
-                                <span>Settings</span>
-                            </button>
-                        </div>
+                            </div>
+                            <div class="text" id="sc-settingstoggletext1">Einstellungen</div>
+                            <div class="sign" style="display: none" id="sc-settingstogglesign2">
+                                <img src="./static/img/icons/back.png" width="20">
+                            </div>
+                        </button>
                     </div>
 
                     <!-- Steuerungs-Menü -->
@@ -407,13 +405,15 @@
                                     <div class="temp__outdoors-col">
                                         <small class="temp__heading">Außen</small>
                                         <br>
-                                        <span class="temp__o-value" id="externalTempDisplay">{{ external_temperature }} °C</span>
+                                        <span class="temp__o-value" id="externalTempDisplay">{{ external_temperature }}</span>
+                                        <span>°C</span>
                                     </div>
                                     <br>
                                     <div class="temp__outdoors-col">
-                                        <small class="temp__heading">Heizkessel</small>
+                                        <small class="temp__heading">Vorlauf</small>
                                         <br>
-                                        <span class="temp__o-value" id="heaterTempDisplay">{{ heater_temperature }} °C</span>
+                                        <span class="temp__o-value" id="heaterTempDisplay">{{ heater_temperature }}</span>
+                                        <span>°C</span>
                                     </div>
                                 </div>
                                 <div class="temp__extraInfo">
@@ -428,16 +428,11 @@
                         </div>
                     </div>
 
-                    <!-- Wetter-Menü -->
-                    <div id="sc-weather-menu">
-                        <p style="text-align: center">Coming Soon...</p>
-                    </div>
-
                     <!-- Einstellungs-Menü -->
                     <div id="sc-settings-menu">
                         <div class="sc-card sc-settings-card">
                             <h4 class="sc-title" style="margin: 0;">Einstellungen</h4>
-                            <p class="sc-subtitle">Heizkessel-Temperatur</p>
+                            <p class="sc-subtitle">Vorlauftemperatur</p>
                             <div class="sc-input-column-row">
                                 <div class="sc-input-column">
                                     <label for="minTempInput">Minimal möglich (°C)</label>
@@ -451,8 +446,8 @@
                             <p class="sc-subtitle">Mein Zuhause</p>
                             <div class="sc-input-column-row">
                                 <div class="sc-input-column">
-                                    <label for="cityInput">Stadt oder PLZ</label>
-                                    <input type="text" id="cityInput" value="{{ city_name }}">
+                                    <label for="cityInput">Meine PLZ</label>
+                                    <input type="text" id="cityInput" maxlength="5" value="{{ city_zip }}">
                                 </div>
                                 <div class="sc-input-column">
                                     <label for="heaterVariantInput">Heizungsart</label>
@@ -480,13 +475,13 @@
                                     <input type="number" id="maxRoomTempInput" value="35">
                                 </div>
                             </div>
-                            <button class="sc-submit-button" onclick="updateSettings()">
+                            <button class="sc-submit-button" id="settingsSubmit" onclick="updateSettings()">
                                 <span>Änderungen übernehmen</span>
                             </button>
                         <div>
+
                     </div>
                 </div>
-
                 <img id="tab-image" src="" alt="">
             </div>
         </div>

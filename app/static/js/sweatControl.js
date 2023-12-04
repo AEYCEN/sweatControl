@@ -70,12 +70,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchPredictedValues() {
-    fetch('http://127.0.0.1:5000/test', {
+    fetch('/get_diagram', {
         method: 'POST',
     })
         .then(response => response.json())
         .then(values => {
-            updateChart(values)
+            updateChart(values['chartValues'])
+            updateExternalAndHeaterTemp(values['externalTemp'], values['heaterTemp'])
         })
         .catch((error) => {
             console.error('Error:', error);

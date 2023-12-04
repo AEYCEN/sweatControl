@@ -1,20 +1,43 @@
+let minRoomTempElement;
+let maxRoomTempElement;
+let minTempElement;
+let maxTempElement;
+let heaterVariantElement;
+let heaterVariantName;
+let zipElement;
+let button;
+
 document.addEventListener("DOMContentLoaded", function () {
-    const minRoomTempElement = document.getElementById('minRoomTempInput');
-    const maxRoomTempElement = document.getElementById('maxRoomTempInput');
-    const minTempElement = document.getElementById('minTempInput');
-    const maxTempElement = document.getElementById('maxTempInput');
-    const heaterVariantInput = document.getElementById('heaterVariantInput');
-    const heaterVariantName = document.getElementById('heaterVariantName');
+    minRoomTempElement = document.querySelector('#minRoomTempInput');
+    maxRoomTempElement = document.querySelector('#maxRoomTempInput');
+    minTempElement = document.querySelector('#minTempInput');
+    maxTempElement = document.querySelector('#maxTempInput');
+    heaterVariantElement = document.querySelector('#heaterVariantInput');
+    heaterVariantName = document.querySelector('#heaterVariantName');
+    zipElement = document.querySelector('#cityInput');
+    button = document.querySelector('#settingsSubmit');
+
+    zipElement.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '');
+    });
 
     if (heaterVariant !== 0) {
-        for (let i = 0; i < heaterVariantInput.options.length; i++) {
-            if (heaterVariantInput.options[i].value === '0') {
-                heaterVariantInput.options[i].selected = false;
+        for (let i = 0; i < heaterVariantElement.options.length; i++) {
+            if (heaterVariantElement.options[i].value === '0') {
+                heaterVariantElement.options[i].selected = false;
             }
-            if (heaterVariantInput.options[i].value == heaterVariant) {
-                heaterVariantInput.options[i].selected = true;
-                heaterVariantName.innerText = heaterVariantInput.options[i].innerText;
-                break;
+            if (savedHeaterVariant) {
+                if (heaterVariantElement.options[i].value == savedHeaterVariant) {  // Keine 3 Gleichzeichen!
+                    heaterVariantElement.options[i].selected = true;
+                    heaterVariantName.innerText = heaterVariantElement.options[i].innerText;
+                    break;
+                }
+            } else {
+                if (heaterVariantElement.options[i].value == heaterVariant) {  // Keine 3 Gleichzeichen!
+                    heaterVariantElement.options[i].selected = true;
+                    heaterVariantName.innerText = heaterVariantElement.options[i].innerText;
+                    break;
+                }
             }
         }
     } else {
@@ -36,34 +59,57 @@ document.addEventListener("DOMContentLoaded", function () {
         minTempElement.value = 20;
         maxTempElement.value = 80;
     }
+    if (savedZip) {
+        zipElement.value = savedZip;
+    } else {
+        zipElement.value = zipcode;
+    }
 })
 
 function updateSettings() {
-    // Raumtemperatur-Einstellbereich
-    const minRoomTempElement = document.getElementById('minRoomTempInput');
-    const maxRoomTempElement = document.getElementById('maxRoomTempInput');
+    let changedSettings = false;
+    savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"), 10);
+    savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"), 10);
+    savedMinTemp = parseInt(localStorage.getItem("minTemp"), 10);
+    savedMaxTemp = parseInt(localStorage.getItem("maxTemp"), 10);
+    savedHeaterVariant = parseInt(localStorage.getItem("heaterVariant"), 10);
+    savedZip = parseInt(localStorage.getItem("zipcode"), 10);
 
-    if (minRoomTempElement.value !== savedMinRoomTemp || maxRoomTempElement.value !== savedMaxRoomTemp) {
+    // Raumtemperatur-Einstellbereich
+    const minRoomTemp = parseInt(minRoomTempElement.value, 10);
+    const maxRoomTemp = parseInt(maxRoomTempElement.value, 10);
+
+    if (minRoomTemp !== savedMinRoomTemp || maxRoomTemp !== savedMaxRoomTemp) {
         localStorage.setItem("minRoomTemp", minRoomTempElement.value);
         localStorage.setItem("maxRoomTemp", maxRoomTempElement.value);
-        const thermostat = new NeuThermostat(".temp", savedMinRoomTemp, savedMaxRoomTemp);
+
+        new NeuThermostat(".temp", savedMinRoomTemp, savedMaxRoomTemp);
+        changedSettings = true;
     }
 
-    // Kesseltemperatur-Einstellbereich
-    const minTempElement = document.getElementById('minTempInput');
-    const maxTempElement = document.getElementById('maxTempInput');
-    if (minTempElement.value !== savedMinTemp || maxTempElement.value !== savedMaxTemp) {
+    // Kesseltemperatur-Einstellbereich, Heizungstyp, und PLZ ändern
+    const minTempInput = parseInt(minTempElement.value, 10);
+    const maxTempInput = parseInt(maxTempElement.value, 10);
+    const heaterVariantInput = parseInt(heaterVariantElement.value, 10);
+    const zipCodeInput = parseInt(zipElement.value, 10);
+
+    if (minTempInput !== savedMinTemp || maxTempInput !== savedMaxTemp || heaterVariantInput !== savedHeaterVariant || zipCodeInput !== savedZip) {
         localStorage.setItem("minTemp", minTempElement.value);
         localStorage.setItem("maxTemp", maxTempElement.value);
+        localStorage.setItem("heaterVariant", heaterVariantElement.value);
+        heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText;
+        localStorage.setItem("zipcode", zipElement.value);
 
-        fetch('http://127.0.0.1:5000/update_temperatures_boiler', {
+        fetch('/update_settings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                minTemperature: minTempElement.value,
-                maxTemperature: maxTempElement.value
+                minTemperature: minTempInput,
+                maxTemperature: maxTempInput,
+                heaterVariant: heaterVariantInput,
+                plz: zipCodeInput
             })
         })
         .then(response => response.json())
@@ -73,5 +119,56 @@ function updateSettings() {
         .catch((error) => {
             console.error('Error:', error);
         });
+        
+        changedSettings = true;
+    }
+
+    if (changedSettings === true) {
+        showSuccessToast();
+    } else {
+        showErrorToast('nochange');
     }
 }
+
+function showSuccessToast() {
+    if (!button) return;
+
+    button.classList.add('buttonSuccess');
+    const span = button.querySelector('span');
+    if (span) {
+        span.innerText = '✔ Erfolgreich geändert';
+    }
+
+    setTimeout(function () {
+        button.classList.remove('buttonSuccess');
+        if (span) {
+            span.innerText = 'Änderungen übernehmen';
+        }
+    }, TOAST_TIMEOUT);
+}
+
+function showErrorToast(type) {
+    if (!button) return;
+
+    button.classList.toggle('buttonError');
+    const span = button.querySelector('span');
+    if (span) {
+        switch (type) {
+            case 'nochange':
+                span.innerText = '✘ Keine Änderungen!';
+                break;
+            case 'wronginput':
+                span.innerText = '✘  Fehlerhafte Eingabe!';
+                break;
+        }
+    }
+
+    setTimeout(function () {
+        button.classList.toggle('buttonError');
+        if (span) {
+            span.innerText = 'Änderungen übernehmen';
+        }
+    }, TOAST_TIMEOUT);
+}
+
+const TOAST_TIMEOUT = 2500;
