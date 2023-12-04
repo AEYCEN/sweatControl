@@ -417,7 +417,7 @@
     text-align: center;
 }
 
-.temp__o-value {
+.temp__o-value, .temp__outdoors span {
     font-size: 1.2em;
 }
 

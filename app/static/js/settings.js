@@ -87,7 +87,7 @@ function updateSettings() {
         localStorage.setItem("heaterVariant", heaterVariantElement.value);
         heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText
 
-        fetch('http://127.0.0.1:5000/update_temperatures_boiler', {
+        fetch('/update_temperatures_boiler', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

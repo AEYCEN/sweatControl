@@ -19,14 +19,13 @@ class WeatherAPI:
 
     def get_external_temperature(self, variant):
         try:
-            listOfDelays = {0: 2,
-                            1: 3,
+            listOfDelays = {1: 3,
                             2: 4,
                             3: 5,
                             4: 2,
-                            5: 3,
+                            5: 0,
                             6: 4,
-                            7: 5,
+                            7: 1,
                             8: 2}
             heater_delay = listOfDelays.get(variant, 2)
 

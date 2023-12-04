@@ -104,7 +104,7 @@ class NeuThermostat {
 		el.textContent = digit;
 	}
 	updateRoom(temp) {
-	  fetch('http://127.0.0.1:5000/update_temperature_room', {
+	  fetch('/update_temperature_room', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

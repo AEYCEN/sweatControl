@@ -1,7 +1,6 @@
 import os
 import sys
 
-
 from flask import Flask, render_template, jsonify, request
 from app.HeaterController import HeaterController, get_current_city_name
 
@@ -39,11 +38,20 @@ def create_app(test_config=None):
             roomTemp = data['roomTemp']
 
             # Update the heater controller with new temperatures
-            heater_controller.room_temperature= int(roomTemp)
+            heater_controller.room_temperature = int(roomTemp)
 
             return jsonify({'status': 'success', 'roomTemp': heater_controller.room_temperature})
         except Exception as e:
             return jsonify({'status': 'error'})
+
+    @app.route('/get_diagram', methods=['POST'])
+    def test():
+        data = {"chartValues": heater_controller.get_data_diagram(),
+                "externalTemp": heater_controller.get_external_temperature(),
+                "heaterTemp": heater_controller.get_heater_temperature()}
+
+        return jsonify(data)
+
     @app.route('/update_temperatures_boiler', methods=['POST'])
     def update_temperatures_boiler():
         try:
@@ -57,7 +65,8 @@ def create_app(test_config=None):
             heater_controller.min_heater_temperature = int(min_temp)
             heater_controller.max_heater_temperature = int(max_temp)
 
-            return jsonify({'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp, 'variant': new_variant})
+            return jsonify(
+                {'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp, 'variant': new_variant})
         except Exception as e:
             return jsonify({'status': 'error', 'message': str(e)})
 
@@ -75,13 +84,5 @@ def create_app(test_config=None):
                                room_temperature=room_temperature,
                                city_name=city_name,
                                heater_variant=heater_variant)
-
-    @app.route('/test', methods=['POST'])
-    def test():
-        data = {"chartValues": heater_controller.get_data_diagram(),
-                "externalTemp": heater_controller.get_external_temperature(),
-                "heaterTemp": heater_controller.get_heater_temperature()}
-
-        return jsonify(data)
 
     return app

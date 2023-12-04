@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function fetchPredictedValues() {
-    fetch('http://127.0.0.1:5000/test', {
+    fetch('/get_diagram', {
         method: 'POST',
     })
         .then(response => response.json())
