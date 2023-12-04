@@ -372,22 +372,17 @@
                     <!--============================ SweatControl App ============================-->
                     <div class="sc-head">
                         <div class="sc-nav-img">
-                            <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="140px">
+                            <img src="./static/img/sweatControl-full.png" alt="SweatControl Smart Home Heating" width="155px">
                         </div>
-                        <div class="sc-nav">
-                            <button id="sc-nav-button-controls" class="sc-nav-button sc-button-active" onclick="activateMenu('sc-controls-menu')">
-                                <img src="./static/img/icons/controls.png" width="20">
-                                <span>Steuerung</span>
-                            </button>
-                            <button id="sc-nav-button-weather" class="sc-nav-button" onclick="activateMenu('sc-weather-menu')">
-                                <img src="./static/img/icons/weather.png" width="21">
-                                <span>Wetter</span>
-                            </button>
-                            <button id="sc-nav-button-settings" class="sc-nav-button" onclick="activateMenu('sc-settings-menu')">
+                        <button class="sc-nav-button" onclick="toggleMenu()" id="sc-nav-button-settings">
+                            <div class="sign" id="sc-settingstogglesign1">
                                 <img src="./static/img/icons/settings.png" width="20">
-                                <span>Settings</span>
-                            </button>
-                        </div>
+                            </div>
+                            <div class="text" id="sc-settingstoggletext1">Einstellungen</div>
+                            <div class="sign" style="display: none" id="sc-settingstogglesign2">
+                                <img src="./static/img/icons/back.png" width="20">
+                            </div>
+                        </button>
                     </div>
 
                     <!-- Steuerungs-Menü -->
@@ -415,7 +410,7 @@
                                     </div>
                                     <br>
                                     <div class="temp__outdoors-col">
-                                        <small class="temp__heading">Heizkessel</small>
+                                        <small class="temp__heading">Vorlauf</small>
                                         <br>
                                         <span class="temp__o-value" id="heaterTempDisplay">{{ heater_temperature }}</span>
                                         <span>°C</span>
@@ -433,15 +428,11 @@
                         </div>
                     </div>
 
-                    <!-- Wetter-Menü -->
-                    <div id="sc-weather-menu">
-                    </div>
-
                     <!-- Einstellungs-Menü -->
                     <div id="sc-settings-menu">
                         <div class="sc-card sc-settings-card">
                             <h4 class="sc-title" style="margin: 0;">Einstellungen</h4>
-                            <p class="sc-subtitle">Heizkessel-Temperatur</p>
+                            <p class="sc-subtitle">Vorlauftemperatur</p>
                             <div class="sc-input-column-row">
                                 <div class="sc-input-column">
                                     <label for="minTempInput">Minimal möglich (°C)</label>
