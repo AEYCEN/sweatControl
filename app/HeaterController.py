@@ -1,11 +1,15 @@
 import geocoder
 from app.HeaterModel import HeaterModel
+from app.WeatherApi import WeatherAPI
 from app.OpenWeatherAPI import OpenWeatherAPI
 
 
 def get_current_city():
     location = geocoder.ip('me')
-    return location.city
+    coordinates = location.latlng
+    city_name = location.city
+    return city_name
+    return coordinates
 
 
 class HeaterController:
@@ -16,8 +20,8 @@ class HeaterController:
     heater_variant = 4  # Liste der Varianten im Select der Einstellungen definiert (0 bis 8)
 
     def __init__(self):
-        city_name = get_current_city()
-        self.api = OpenWeatherAPI(city_name)
+        city_coordinates = get_current_city()
+        self.api = OpenWeatherAPI(city_coordinates)
         self.model = HeaterModel()
 
     def get_external_temperature(self):
@@ -27,15 +31,14 @@ class HeaterController:
         return self.room_temperature
 
     def get_heater_temperature(self):
-        return self.model.predict_heater_temperature(self.get_external_temperature(), self.get_room_temperature(),
+        return self.model.predict_heater_temperature(round(self.get_external_temperature(), 2), self.get_room_temperature(),
                                                      self.min_heater_temperature, self.max_heater_temperature)
 
     def update_room_temperature(self, new_temperature):
         self.room_temperature = new_temperature
 
     def get_data_diagram(self):
-        x = [-20, -19, -18, -17, -16, -15, -14, -13, -12, -11, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18,
-             20]
+        x = [20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0, -2, -4, -6, -8, -10, -12, -14, -16, -18, -20]
         predicted_values = []
 
         for temperature_aussen in x:
@@ -53,12 +56,3 @@ class HeaterController:
     def get_heater_variant(self):
         return self.heater_variant
 
-
-if __name__ == "__main__":
-    controller = HeaterController()
-    temperature = controller.get_external_temperature()
-    city = get_current_city()
-    if temperature:
-        print(f"{city} - {temperature}°C")
-    else:
-        print("Failed to fetch temperature!")
