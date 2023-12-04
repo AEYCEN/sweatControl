@@ -5,9 +5,9 @@ from sklearn.linear_model import LinearRegression
 class HeaterModel:
     def __init__(self):
         data = {
-            'external_temperature': [-20, -15, -10, -5, 0, 5, 10, 15, 20, 25, 30],
-            'selected_heater_temperature': [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25],
-            'target_vorlauftemperatur': [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70]
+            'external_temperature': [20, 18, 15, 13, 10, 8, 5, 0, -5, -8, -10, -13, -15, -18, -20],
+            'selected_heater_temperature': [14, 16, 17, 18, 20, 22, 23, 24, 25, 26, 28, 30, 32, 34, 35],
+            'target_vorlauftemperatur': [30, 33, 35, 40, 43, 45, 50, 53, 55, 60, 63, 65, 70, 73, 80]
         }
 
         # Daten in ein Pandas DataFrame laden
