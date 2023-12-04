@@ -4,6 +4,7 @@ let minTempElement;
 let maxTempElement;
 let heaterVariantElement;
 let heaterVariantName;
+let zipElement;
 let button;
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -13,7 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
     maxTempElement = document.querySelector('#maxTempInput');
     heaterVariantElement = document.querySelector('#heaterVariantInput');
     heaterVariantName = document.querySelector('#heaterVariantName');
+    zipElement = document.querySelector('#cityInput');
     button = document.querySelector('#settingsSubmit');
+
+    zipElement.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '');
+    });
 
     if (heaterVariant !== 0) {
         for (let i = 0; i < heaterVariantElement.options.length; i++) {
@@ -53,6 +59,11 @@ document.addEventListener("DOMContentLoaded", function () {
         minTempElement.value = 20;
         maxTempElement.value = 80;
     }
+    if (savedZip) {
+        zipElement.value = savedZip;
+    } else {
+        zipElement.value = zipcode;
+    }
 })
 
 function updateSettings() {
@@ -62,6 +73,7 @@ function updateSettings() {
     savedMinTemp = parseInt(localStorage.getItem("minTemp"), 10);
     savedMaxTemp = parseInt(localStorage.getItem("maxTemp"), 10);
     savedHeaterVariant = parseInt(localStorage.getItem("heaterVariant"), 10);
+    savedZip = parseInt(localStorage.getItem("zipcode"), 10);
 
     // Raumtemperatur-Einstellbereich
     const minRoomTemp = parseInt(minRoomTempElement.value, 10);
@@ -71,21 +83,22 @@ function updateSettings() {
         localStorage.setItem("minRoomTemp", minRoomTempElement.value);
         localStorage.setItem("maxRoomTemp", maxRoomTempElement.value);
 
-        const thermostat = new NeuThermostat(".temp", savedMinRoomTemp, savedMaxRoomTemp);
+        new NeuThermostat(".temp", savedMinRoomTemp, savedMaxRoomTemp);
         changedSettings = true;
     }
 
-    // Kesseltemperatur-Einstellbereich und Heizungstyp ändern
-    const minTemp = parseInt(minTempElement.value, 10);
-    const maxTemp = parseInt(maxTempElement.value, 10);
-    const heaterVariantElement = document.querySelector('#heaterVariantInput');
-    const heaterVariant = parseInt(heaterVariantElement.value, 10);
+    // Kesseltemperatur-Einstellbereich, Heizungstyp, und PLZ ändern
+    const minTempInput = parseInt(minTempElement.value, 10);
+    const maxTempInput = parseInt(maxTempElement.value, 10);
+    const heaterVariantInput = parseInt(heaterVariantElement.value, 10);
+    const zipCodeInput = parseInt(zipElement.value, 10);
 
-    if (minTemp !== savedMinTemp || maxTemp !== savedMaxTemp || heaterVariant !== savedHeaterVariant) {
+    if (minTempInput !== savedMinTemp || maxTempInput !== savedMaxTemp || heaterVariantInput !== savedHeaterVariant || zipCodeInput !== savedZip) {
         localStorage.setItem("minTemp", minTempElement.value);
         localStorage.setItem("maxTemp", maxTempElement.value);
         localStorage.setItem("heaterVariant", heaterVariantElement.value);
-        heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText
+        heaterVariantName.innerText = heaterVariantElement.selectedOptions[0].innerText;
+        localStorage.setItem("zipcode", zipElement.value);
 
         fetch('/update_settings', {
             method: 'POST',
@@ -93,16 +106,15 @@ function updateSettings() {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                minTemperature: minTemp,
-                maxTemperature: maxTemp,
-                heaterVariant: heaterVariant
-               // plz: 1234
+                minTemperature: minTempInput,
+                maxTemperature: maxTempInput,
+                heaterVariant: heaterVariantInput,
+                plz: zipCodeInput
             })
         })
         .then(response => response.json())
         .then(values => {
             fetchPredictedValues()
-            console.log(values);
         })
         .catch((error) => {
             console.error('Error:', error);

@@ -75,7 +75,6 @@ function fetchPredictedValues() {
     })
         .then(response => response.json())
         .then(values => {
-        console.log(values);
             updateChart(values['chartValues'])
             updateExternalAndHeaterTemp(values['externalTemp'], values['heaterTemp'])
         })

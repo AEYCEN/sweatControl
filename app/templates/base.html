@@ -23,11 +23,13 @@
         let roomTemp = {{ room_temperature }};
         let heaterTemp = {{ heater_temperature }};
         let heaterVariant = {{ heater_variant }};
+        let zipcode = {{ city_zip }};
         let savedMinRoomTemp = parseInt(localStorage.getItem("minRoomTemp"));
         let savedMaxRoomTemp = parseInt(localStorage.getItem("maxRoomTemp"));
         let savedMinTemp = parseInt(localStorage.getItem("minTemp"));
         let savedMaxTemp = parseInt(localStorage.getItem("maxTemp"));
         let savedHeaterVariant = parseInt(localStorage.getItem("heaterVariant"));
+        let savedZip = parseInt(localStorage.getItem("zipcode"));
     </script>
     <script type="text/javascript" src="../static/js/navMenuChanger.js"></script>
     <script type="text/javascript" src="../static/js/sweatControl.js"></script>
@@ -433,7 +435,6 @@
 
                     <!-- Wetter-Menü -->
                     <div id="sc-weather-menu">
-                        <p style="text-align: center">Coming Soon...</p>
                     </div>
 
                     <!-- Einstellungs-Menü -->
@@ -454,8 +455,8 @@
                             <p class="sc-subtitle">Mein Zuhause</p>
                             <div class="sc-input-column-row">
                                 <div class="sc-input-column">
-                                    <label for="cityInput">Stadt oder PLZ</label>
-                                    <input type="text" id="cityInput" value="{{ city_name }}">
+                                    <label for="cityInput">Meine PLZ</label>
+                                    <input type="text" id="cityInput" maxlength="5" value="{{ city_zip }}">
                                 </div>
                                 <div class="sc-input-column">
                                     <label for="heaterVariantInput">Heizungsart</label>

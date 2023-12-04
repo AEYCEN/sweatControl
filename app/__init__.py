@@ -2,12 +2,12 @@ import os
 import sys
 
 from flask import Flask, render_template, jsonify, request
-from app.HeaterController import HeaterController, get_current_city_name, DEFAULT_POSTAL_CODE
+from app.HeaterController import HeaterController
 
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True, template_folder='templates', static_folder='static')
-    version = '0.1-alpha'
+    version = '0.3-alpha'
 
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -48,7 +48,8 @@ def create_app(test_config=None):
     def test():
         data = {"chartValues": heater_controller.get_data_diagram(),
                 "externalTemp": heater_controller.get_external_temperature(),
-                "heaterTemp": heater_controller.get_heater_temperature()}
+                "heaterTemp": heater_controller.get_heater_temperature(),
+                "city": heater_controller.get_current_city_name()}
 
         return jsonify(data)
 
@@ -65,10 +66,11 @@ def create_app(test_config=None):
             heater_controller.heater_variant = int(new_variant)
             heater_controller.min_heater_temperature = int(min_temp)
             heater_controller.max_heater_temperature = int(max_temp)
-            DEFAULT_POSTAL_CODE = int(plz)
+            heater_controller.defZip = int(plz)
+
 
             return jsonify(
-                {'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp, 'variant': new_variant})
+                {'status': 'success', 'minTemperature': min_temp, 'maxTemperature': max_temp, 'variant': new_variant, 'zip': heater_controller.defZip})
         except Exception as e:
             return jsonify({'status': 'error', 'message': str(e)})
 
@@ -77,7 +79,8 @@ def create_app(test_config=None):
         external_temperature = heater_controller.get_external_temperature()
         heater_temperature = heater_controller.get_heater_temperature()
         room_temperature = heater_controller.get_wanted_room_temperature()
-        city_name = get_current_city_name()
+        city_name = heater_controller.get_current_city_name()
+        city_zip = heater_controller.defZip
         heater_variant = heater_controller.get_heater_variant()
         return render_template('base.html',
                                app_version=version,
@@ -85,6 +88,7 @@ def create_app(test_config=None):
                                heater_temperature=heater_temperature,
                                room_temperature=room_temperature,
                                city_name=city_name,
+                               city_zip=city_zip,
                                heater_variant=heater_variant)
 
     return app
