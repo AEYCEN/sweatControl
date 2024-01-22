@@ -9,7 +9,7 @@
     >
   </picture>
   <br><br>
-  <b style="font-size: 16px">© 2023 [IT-12] Marcus Adolfs / Alexander Campbell-Smith / Jakub Krymowski</b>
+  <b style="font-size: 16px">© 2023 AEYCEN / Jakub Krymowski / Alexander Campbell-Smith / </b>
    <br>
    Making heating cool again.
 </p>
@@ -83,17 +83,10 @@ If another program is already using port 5000, you’ll see OSError: [Errno 98] 
 ## 📖 Imprint
 
 **Development, Administration, Project Management & Design**<br>
-*Team from Class IT-12:*<br>
-Marcus Adolfs<br>
-Alexander Campbell-Smith<br>
-Jakub Krymowski
+- AEYCEN<br>
+- Jakub Krymowski<br>
+- Alexander Campbell-Smith<br>
 
-**On behalf of**<br>
-Frank Mühlen & Thomas Breder<br>
-Berufskolleg Uerdingen<br>
-Alte Krefelder Str. 93<br>
-47829 Krefeld<br>
-Germany
 
 ## 📜 Licence
 
